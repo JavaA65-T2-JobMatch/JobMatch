@@ -1,10 +1,10 @@
 package com.example.demo.models;
 
 import com.example.demo.enums.ProfessionalStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "professionals")
 public class Professional extends User{
 
     @Column(name = "first_name", nullable = false)
