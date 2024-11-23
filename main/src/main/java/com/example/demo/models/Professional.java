@@ -5,7 +5,15 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "professionals")
-public class Professional extends User{
+public class Professional {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int professionalId;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private UserEntity user;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -83,5 +91,21 @@ public class Professional extends User{
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public int getProfessionalId() {
+        return professionalId;
+    }
+
+    public void setProfessionalId(int professionalId) {
+        this.professionalId = professionalId;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

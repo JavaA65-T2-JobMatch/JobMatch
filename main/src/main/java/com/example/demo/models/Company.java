@@ -1,15 +1,21 @@
 package com.example.demo.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "companies")
-public class Company extends User{
+public class Company{
 
-    @Column(name = "company_name")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int companyId;
+
+    @Column(name = "company_name", nullable = false)
     private String companyName;
+
+    @OneToOne
+    @JoinColumn(name = "user_id",referencedColumnName = "user_id",nullable = false)
+    private UserEntity user;
 
     @Column(name = "description")
     private String description;
@@ -61,5 +67,21 @@ public class Company extends User{
 
     public void setCity_id(int city_id) {
         this.city_id = city_id;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

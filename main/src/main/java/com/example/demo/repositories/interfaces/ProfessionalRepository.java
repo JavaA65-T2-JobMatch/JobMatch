@@ -3,8 +3,8 @@ package com.example.demo.repositories.interfaces;
 import com.example.demo.models.Professional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface ProfessionalRepository extends JpaRepository<Professional, Long> {
-    Professional findByName(String name);
-    Professional findByCity(Integer city);
-    Professional findByStatus(String status);
+    Optional<Professional>findByFirstName(String firstName);
 }
