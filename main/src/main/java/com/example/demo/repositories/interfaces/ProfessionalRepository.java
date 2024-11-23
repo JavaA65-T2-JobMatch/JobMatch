@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface ProfessionalRepository extends JpaRepository<Professional, Long> {
+public interface ProfessionalRepository extends JpaRepository<Professional, Integer> {
     Optional<Professional>findByFirstName(String firstName);
 }
