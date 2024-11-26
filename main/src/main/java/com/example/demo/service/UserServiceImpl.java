@@ -1,28 +1,43 @@
 package com.example.demo.service;
 
+import com.example.demo.Security.JwtConfig;
 import com.example.demo.dTOs.UserLoginDTO;
 import com.example.demo.dTOs.UserRegistrationDTO;
 import com.example.demo.enums.UserRole;
 import com.example.demo.service.interfaces.UserService;
 import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.interfaces.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.security.Key;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final JwtConfig jwtConfig;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.authenticationManager = authenticationManager;
+        this.jwtConfig = jwtConfig;
     }
 
 
@@ -56,24 +71,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity updateUser(int userId, UserEntity updatedUserEntity, int authenticatedUserId) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        if (userEntity.getUserId() != authenticatedUserId) {
-            throw new SecurityException("You are not authorized to update this user account");
+    public UserEntity updateUser(int userId, UserEntity updatedUserEntity, String newUsername) {
+        if (userId != updatedUserEntity.getUserId()) {
+            throw new IllegalArgumentException("Unauthorized operation");
         }
 
-        userEntity.setUsername(updatedUserEntity.getUsername());
-        userEntity.setPassword(updatedUserEntity.getPassword());
+        UserEntity userToUpdate = userRepository.findById(userId)
+                .orElseThrow(()-> new IllegalArgumentException("User not found"));
 
-        return userRepository.save(userEntity);
+        userToUpdate.setUsername(newUsername);
+
+        userRepository.save(userToUpdate);
+        return userToUpdate;
     }
 
     @Override
     public UserEntity register(UserRegistrationDTO registrationDTO) {
-
-        if (userRepository.existsByUsername(registrationDTO.getUsername())){
+        if (userRepository.existsByUsername(registrationDTO.getUsername())) {
             throw new IllegalArgumentException("Username already exists");
         }
 
@@ -81,19 +95,55 @@ public class UserServiceImpl implements UserService {
         UserEntity user = new UserEntity();
         user.setUsername(registrationDTO.getUsername());
         user.setPassword(hashedPassword);
-        user.setRole(UserRole.valueOf(registrationDTO.getRole().toUpperCase()));
+
+        try {
+            user.setRole(UserRole.valueOf(registrationDTO.getRole().toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid role: " + registrationDTO.getRole() +
+                    ". Allowed roles are: ADMIN, COMPANY, PROFESSIONAL.");
+        }
 
         return userRepository.save(user);
     }
 
     @Override
-    public UserEntity login(UserLoginDTO loginDTO) {
-        UserEntity user = userRepository.findByUsername(loginDTO.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Username not found"));
+    public void changePassword(String username, String oldPassword, String newPassword) {
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(()-> new UsernameNotFoundException("User not found"));
 
-        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("Wrong password");
+        if (!passwordEncoder.matches(oldPassword,user.getPassword())) {
+            throw new IllegalArgumentException("Old password is incorrect");
         }
-        return user;
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
+
+    @Override
+    public String login(UserLoginDTO loginDTO) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginDTO.getUsername(),
+                            loginDTO.getPassword()
+                    )
+            );
+            return "User authenticated successfully";
+        } catch (AuthenticationException e) {
+            throw new IllegalArgumentException("Invalid username or password");
+        }
+    }
+
+    @Override
+    public String generateToken(String username){
+        long expirationTime = 3600000;
+
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(jwtConfig.getSecretKey())
+                .compact();
+    }
+
 }

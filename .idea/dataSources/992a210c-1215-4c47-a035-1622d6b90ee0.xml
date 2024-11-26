@@ -1386,7 +1386,7 @@ beers|schema||spring-demo-user|localhost|grant option|G</Grants>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
     <schema id="513" parent="1" name="jobmatch">
-      <LastIntrospectionLocalTimestamp>2024-11-23.11:32:31</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-11-24.01:15:42</LastIntrospectionLocalTimestamp>
       <CollationName>latin1_swedish_ci</CollationName>
     </schema>
     <schema id="514" parent="1" name="mysql">
@@ -1953,7 +1953,7 @@ beers|schema||spring-demo-user|localhost|grant option|G</Grants>
       <UnderlyingIndexName>skills_pk_3</UnderlyingIndexName>
     </key>
     <column id="639" parent="530" name="user_id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>4</AutoIncrement>
       <DasType>int(11)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1968,14 +1968,14 @@ beers|schema||spring-demo-user|localhost|grant option|G</Grants>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="642" parent="530" name="role">
-      <DasType>enum(&apos;Professional&apos;, &apos;Company&apos;, &apos;Admin&apos;)|0e</DasType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="643" parent="530" name="created_at">
+    <column id="642" parent="530" name="created_at">
       <DasType>timestamp|0s</DasType>
       <DefaultExpression>current_timestamp()</DefaultExpression>
+      <Position>4</Position>
+    </column>
+    <column id="643" parent="530" name="role">
+      <DasType>enum(&apos;COMPANY&apos;, &apos;PROFESSIONAL&apos;, &apos;ADMIN&apos;)|0e</DasType>
+      <DefaultExpression>&apos;PROFESSIONAL&apos;</DefaultExpression>
       <Position>5</Position>
     </column>
     <index id="644" parent="530" name="PRIMARY">

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.enums.UserRole;
 import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.interfaces.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class CustumUserDetailsService implements UserDetailsService {
@@ -24,13 +26,15 @@ public class CustumUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        GrantedAuthority authority = new SimpleGrantedAuthority("Role_" + user.getRole());
+        user.setRole(UserRole.valueOf(user.getRole().toString().toUpperCase()));
 
-        return new User(user.getUsername(), user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
-
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                List.of(new SimpleGrantedAuthority(user.getRole().toString().toUpperCase()))
+        );
     }
 
 }

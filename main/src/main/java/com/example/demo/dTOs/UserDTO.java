@@ -2,8 +2,17 @@ package com.example.demo.dTOs;
 
 public class UserDTO {
 
+    private int userDtoID;
     private String username;
     private String role;
+
+    public int getUserDtoID() {
+        return userDtoID;
+    }
+
+    public void setUserDtoID(int userDtoID) {
+        this.userDtoID = userDtoID;
+    }
 
     public String getUsername() {
         return username;
