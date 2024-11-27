@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "job_application")
-public class JobApplication {
+public class Application {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +35,11 @@ public class JobApplication {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-//    @ManyToOne
-//    @JoinColumn(name = "skillset", nullable = false)
-//    private Skill skillset;
+    @ManyToOne
+    @JoinColumn(name = "skillset", nullable = false)
+    private Skill skill;
 
-
-    public JobApplication() {
+    public Application() {
     }
 
     public int getId() {
@@ -106,4 +105,12 @@ public class JobApplication {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
+    }
+
 }
