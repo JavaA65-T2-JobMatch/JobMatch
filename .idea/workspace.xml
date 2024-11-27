@@ -4,23 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d493849-2e57-497c-bd3c-67f329abf49e" name="Changes" comment="fixxing problems">
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/JwtConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/ChangePasswordDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/helpers/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/992a210c-1215-4c47-a035-1622d6b90ee0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/992a210c-1215-4c47-a035-1622d6b90ee0.xml" afterDir="false" />
+    <list default="true" id="9d493849-2e57-497c-bd3c-67f329abf49e" name="Changes" comment="Adding LogIn/LogOut/Register/ChangingPassword and username">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/main/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserRegistrationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserRegistrationDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/enums/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/enums/UserRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/CustumUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/CustumUserDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +163,7 @@
       <workItem from="1732392494079" duration="17951000" />
       <workItem from="1732486150914" duration="100000" />
       <workItem from="1732529133209" duration="671000" />
-      <workItem from="1732617566859" duration="12661000" />
+      <workItem from="1732617566859" duration="15058000" />
     </task>
     <task id="LOCAL-00001" summary="Base Program">
       <option name="closed" value="true" />
@@ -252,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732396717091</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Adding LogIn/LogOut/Register/ChangingPassword and username">
+      <option name="closed" value="true" />
+      <created>1732643745929</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1732643745929</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,6 +272,7 @@
     <MESSAGE value="Update Repositories,UserEntity,update Table," />
     <MESSAGE value="Services added" />
     <MESSAGE value="fixxing problems" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixxing problems" />
+    <MESSAGE value="Adding LogIn/LogOut/Register/ChangingPassword and username" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding LogIn/LogOut/Register/ChangingPassword and username" />
   </component>
 </project>
