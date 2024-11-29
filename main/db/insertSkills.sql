@@ -1,4 +1,4 @@
-INSERT INTO skills (name, created_by) VALUES
+INSERT INTO jobmatch.skills (name, created_by) VALUES
 -- IT Skills
 ('Java', 'administrator'),
 ('Python', 'administrator'),
