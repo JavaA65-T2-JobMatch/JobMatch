@@ -19,10 +19,10 @@ public class Ad {
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
-    @Column(name = "salary_min", precision = 10, scale = 2)
+    @Column(name = "salary_min", precision = 10)
     private Double salaryMin;
 
-    @Column(name = "salary_max", precision = 10, scale = 2)
+    @Column(name = "salary_max", precision = 10)
     private Double salaryMax;
 
     @Column(name = "description", length = 255)

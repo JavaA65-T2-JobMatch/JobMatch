@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.enums.JobAdStatus;
 import com.example.demo.models.Ad;
 import com.example.demo.repositories.interfaces.JobAdRepository;
 import com.example.demo.service.interfaces.JobAdService;
@@ -23,12 +24,12 @@ public class JobAdServiceImpl implements JobAdService {
 
     @Override
     public List<Ad> getJobAdsByCompanyId(int companyId) {
-        return jobAdRepository.findByCompanyId(companyId);
+        return jobAdRepository.findByCompany_id(companyId);
     }
 
     @Override
     public List<Ad> getActiveJobAds() {
-        return jobAdRepository.findByStatus("Active");
+        return jobAdRepository.findByStatus(JobAdStatus.ACTIVE);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.REST;
 
 import com.example.demo.dTOs.ChangePasswordDTO;
 import com.example.demo.dTOs.UserDTO;

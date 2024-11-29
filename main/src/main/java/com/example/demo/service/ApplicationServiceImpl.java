@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.enums.ApplicationStatus;
 import com.example.demo.models.Application;
 import com.example.demo.repositories.interfaces.ApplicationRepository;
 import com.example.demo.service.interfaces.ApplicationService;
@@ -23,12 +24,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<Application> getApplicationsByProfessionalId(int professionalId) {
-        return applicationRepository.findByProfessionalId(professionalId);
+        return applicationRepository.findByProfessional_id(professionalId);
     }
 
     @Override
     public List<Application> getActiveApplications() {
-        return applicationRepository.findByStatus("Active");
+        return applicationRepository.findByStatus(ApplicationStatus.ACTIVE);
     }
 
     @Override

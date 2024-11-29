@@ -1,16 +1,19 @@
 package com.example.demo.service.interfaces;
 
+import com.example.demo.dTOs.SkillDTO;
 import com.example.demo.models.Skill;
 
 import java.util.List;
 
 public interface SkillService {
 
-    List<Skill> getAllSkills();
+    SkillDTO getSkillById(int id);
 
-    Skill findSkillByName(String name);
+    SkillDTO createSkill(SkillDTO skillDTO);
 
-    Skill saveSkill(Skill skill);
+    SkillDTO updateSkill(int id, SkillDTO skillDTO);
 
-    void deleteSkill(int id);
+    boolean deleteSkill(int id);
+
+    List<SkillDTO> getAllSkills();
 }
