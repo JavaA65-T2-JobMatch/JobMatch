@@ -16,10 +16,10 @@ public class Application {
     @JoinColumn(name = "professional_id", nullable = false)
     private Professional professional;
 
-    @Column(name = "desired_salary_min", precision = 10, scale = 2)
+    @Column(name = "desired_salary_min", precision = 10)
     private Double desiredSalaryMin;
 
-    @Column(name = "desired_salary_max", precision = 10, scale = 2)
+    @Column(name = "desired_salary_max", precision = 10)
     private Double desiredSalaryMax;
 
     @Column(name = "motivation", length = 255)

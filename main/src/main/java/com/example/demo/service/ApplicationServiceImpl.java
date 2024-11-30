@@ -24,7 +24,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<Application> getApplicationsByProfessionalId(int professionalId) {
-        return applicationRepository.findByProfessional_id(professionalId);
+        return applicationRepository.findAllByProfessional_ProfessionalId(professionalId);
     }
 
     @Override
