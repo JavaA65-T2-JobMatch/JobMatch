@@ -10,6 +10,8 @@ public interface MatchService {
     List<Match> getAllMatches();
     List<Match> getAllMatchesByApplicationId(int applicationId);
     List<Match> getAllMatchesByAdId(int adId);
+    List<Match> getAllSuccessfulMatches();
+    List<Match> getAllRejectedMatches();
     Optional<Match> getMatchById(int matchId);
     void deleteMatch(int id);
 }
