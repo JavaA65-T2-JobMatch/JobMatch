@@ -14,6 +14,8 @@ public interface JobAdService {
 
     List<Ad> searchJobAdsByTitle(String keyword);
 
+    List<Ad> searchJobAdsByLocation(int locationId);
+
     Ad saveJobAd(Ad jobAd);
 
     void deleteJobAd(int id);

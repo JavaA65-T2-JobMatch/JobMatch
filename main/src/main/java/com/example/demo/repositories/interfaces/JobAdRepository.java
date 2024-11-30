@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface JobAdRepository extends JpaRepository<Ad, Integer> {
 
-    List<Ad> findByCompany_id(int companyId);
+    List<Ad> findByCompany_CompanyId(int companyId);
 
-    List<Ad> findByLocation(int locationId);
+    List<Ad>  findByLocation_CityId(int locationId);
 
     List<Ad> findByStatus(JobAdStatus status);
 

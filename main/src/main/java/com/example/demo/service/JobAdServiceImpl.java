@@ -24,7 +24,7 @@ public class JobAdServiceImpl implements JobAdService {
 
     @Override
     public List<Ad> getJobAdsByCompanyId(int companyId) {
-        return jobAdRepository.findByCompany_id(companyId);
+        return jobAdRepository.findByCompany_CompanyId(companyId);
     }
 
     @Override
@@ -35,6 +35,11 @@ public class JobAdServiceImpl implements JobAdService {
     @Override
     public List<Ad> searchJobAdsByTitle(String keyword) {
         return jobAdRepository.findByTitleContainingIgnoreCase(keyword);
+    }
+
+    @Override
+    public List<Ad> searchJobAdsByLocation(int locationId) {
+        return jobAdRepository.findByLocation_CityId(locationId);
     }
 
     @Override
