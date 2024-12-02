@@ -3,6 +3,8 @@ package com.example.demo.models;
 import com.example.demo.enums.JobAdStatus;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "job_adds")
@@ -45,6 +47,9 @@ public class Ad {
     @ManyToOne
     @JoinColumn(name = "skillset", nullable = false)
     private Skill skillset;
+
+    @OneToMany(mappedBy = "jobAd", fetch = FetchType.LAZY)
+    private List<Match> matches = new ArrayList<>();
 
 
     public Ad() {
@@ -137,4 +142,13 @@ public class Ad {
     public void setSkillset(Skill skillset) {
         this.skillset = skillset;
     }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
+
 }

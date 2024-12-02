@@ -32,6 +32,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applicationRepository.findByStatus(ApplicationStatus.ACTIVE);
     }
 
+    //ToDo Add find successful and rejected matches for an app
+
     @Override
     public Application saveApplication(Application application) {
         return applicationRepository.save(application);

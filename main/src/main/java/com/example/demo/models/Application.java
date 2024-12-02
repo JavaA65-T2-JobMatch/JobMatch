@@ -3,6 +3,8 @@ package com.example.demo.models;
 import com.example.demo.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "job_application")
@@ -38,6 +40,9 @@ public class Application {
     @ManyToOne
     @JoinColumn(name = "skillset", nullable = false)
     private Skill skill;
+
+    @OneToMany (mappedBy = "jobApplication", fetch = FetchType.LAZY)
+    List<Match> matches = new ArrayList<>();
 
     public Application() {
     }
@@ -113,4 +118,11 @@ public class Application {
         this.skill = skill;
     }
 
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
 }

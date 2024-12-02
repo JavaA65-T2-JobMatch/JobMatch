@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="matches")
@@ -14,11 +13,11 @@ public class Match {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "job_application_id", nullable = false)
     private Application jobApplication;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "job_ad_id", nullable = false)
     private Ad jobAd;
 

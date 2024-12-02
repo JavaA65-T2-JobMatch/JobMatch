@@ -46,6 +46,8 @@ public class JobAdServiceImpl implements JobAdService {
         return jobAdRepository.findByLocation_CityId(locationId);
     }
 
+    //ToDo Add find successful and rejected matches for an ad
+
     @Override
     public Ad saveJobAd(Ad jobAd) {
         if (jobAd == null) {
