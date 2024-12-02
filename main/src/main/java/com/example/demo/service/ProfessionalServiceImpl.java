@@ -27,7 +27,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         Professional professional = professionalRepository.findById(professionalId)
                 .orElseThrow(() -> new EntityNotFoundException("Professional not found"));
 
-        if (!professional.getUser().equals(authenticatedUser)) {
+        if (professional.getUserId() != authenticatedUser.getUserId()) {
             throw new SecurityException("You do not have permission to update this professional");
         }
         professional.setFirstName(upradetProfessional.getFirstName());
@@ -45,7 +45,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         Professional professional = professionalRepository.findById(professionalId)
                 .orElseThrow(() -> new EntityNotFoundException("Professional not found"));
 
-        if (!professional.getUser().equals(authenticatedUser)) {
+        if (professional.getUserId() != authenticatedUser.getUserId()) {
             throw new SecurityException("You do not have permission to delete this professional");
         }
 

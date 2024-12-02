@@ -27,7 +27,7 @@ public class CompanyServiceImpl  implements CompanyService {
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new EntityNotFoundException("Company not found"));
 
-        if (!company.getUser().equals(authenticationUser)) {
+        if (company.getUser() != authenticationUser.getUserId()) {
             throw new SecurityException("You are not authorized to update this company");
         }
         company.setCompanyName(updatedCompany.getCompanyName());
@@ -44,7 +44,7 @@ public class CompanyServiceImpl  implements CompanyService {
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new EntityNotFoundException("Company not found"));
 
-        if (!company.getUser().equals(authenticationUser)) {
+        if (company.getUser() != authenticationUser.getUserId()) {
             throw new SecurityException("You are not authorized to delete this company");
         }
 

@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d493849-2e57-497c-bd3c-67f329abf49e" name="Changes" comment="Adding LogIn/LogOut/Register/ChangingPassword and username">
+      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/repositories/interfaces/CityRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/992a210c-1215-4c47-a035-1622d6b90ee0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/992a210c-1215-4c47-a035-1622d6b90ee0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserRegistrationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserRegistrationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Company.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Professional.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Professional.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/CompanyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/CompanyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/ProfessionalServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/ProfessionalServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +56,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>

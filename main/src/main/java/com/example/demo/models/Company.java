@@ -13,9 +13,8 @@ public class Company{
     @Column(name = "company_name", nullable = false)
     private String companyName;
 
-    @OneToOne
     @JoinColumn(name = "user_id",referencedColumnName = "user_id",nullable = false)
-    private UserEntity user;
+    private int user_id;
 
     @Column(name = "description")
     private String description;
@@ -77,11 +76,11 @@ public class Company{
         this.companyId = companyId;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public int getUser() {
+        return user_id;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUser(int user_id) {
+        this.user_id = user_id;
     }
 }
