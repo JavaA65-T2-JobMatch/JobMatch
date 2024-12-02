@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/users/register", "/users/login").permitAll()
                         .requestMatchers("/users/**").authenticated()
-                        .requestMatchers("/professional/**").hasRole("Professional")
-                        .requestMatchers("/company/**").hasRole("Company")
+                        .requestMatchers("/professional/**").authenticated()
+                        .requestMatchers("/company/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

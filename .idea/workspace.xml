@@ -4,18 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d493849-2e57-497c-bd3c-67f329abf49e" name="Changes" comment="Adding LogIn/LogOut/Register/ChangingPassword and username">
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/repositories/interfaces/CityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/992a210c-1215-4c47-a035-1622d6b90ee0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/992a210c-1215-4c47-a035-1622d6b90ee0.xml" afterDir="false" />
+    <list default="true" id="9d493849-2e57-497c-bd3c-67f329abf49e" name="Changes" comment="Fixing register functions">
+      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/ProfessionalController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserRegistrationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/dTOs/UserRegistrationDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Company.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Professional.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Professional.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/CompanyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/CompanyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/repositories/interfaces/ProfessionalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/repositories/interfaces/ProfessionalRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/ProfessionalServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/ProfessionalServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/ProfessionalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/ProfessionalService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +55,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -255,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732643745929</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fixing register functions">
+      <option name="closed" value="true" />
+      <created>1733145709429</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733145709429</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,6 +290,7 @@
     <MESSAGE value="Services added" />
     <MESSAGE value="fixxing problems" />
     <MESSAGE value="Adding LogIn/LogOut/Register/ChangingPassword and username" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding LogIn/LogOut/Register/ChangingPassword and username" />
+    <MESSAGE value="Fixing register functions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing register functions" />
   </component>
 </project>

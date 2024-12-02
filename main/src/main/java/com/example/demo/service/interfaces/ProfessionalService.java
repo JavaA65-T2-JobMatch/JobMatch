@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface ProfessionalService {
 
-    Professional createProfessional(Professional professional);
     Professional updateProfessional(int professionalId, Professional upradetProfessional, UserEntity authenticatedUser);
     void deleteProfessional(int professionalId, UserEntity authenticatedUser);
     Optional<Professional> getProfessionalById(int professionalId);

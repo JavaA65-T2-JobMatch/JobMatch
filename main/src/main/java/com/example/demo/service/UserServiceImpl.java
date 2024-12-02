@@ -17,6 +17,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +32,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -80,6 +82,14 @@ public class UserServiceImpl implements UserService {
         if (user.getUserId() != authenticatedUserId) {
             throw new SecurityException("You are not authorized to delete this user account");
         }
+
+        if (user.getRole() == UserRole.PROFESSIONAL) {
+            professionalRepository.deleteByUserId(userId);
+        }
+//        else if (user.getRole() == UserRole.COMPANY) {
+////            companyRepository.deleteById(userId);
+////        }TODO
+
         userRepository.delete(user);
     }
 

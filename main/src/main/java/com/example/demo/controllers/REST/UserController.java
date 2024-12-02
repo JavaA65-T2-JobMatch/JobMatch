@@ -7,6 +7,7 @@ import com.example.demo.dTOs.UserRegistrationDTO;
 import com.example.demo.helpers.UserMapper;
 import com.example.demo.models.UserEntity;
 import com.example.demo.service.interfaces.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -74,8 +75,17 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable int userId,
                                              @AuthenticationPrincipal UserEntity authenticatedUser){
-        userService.deleteUser(userId,authenticatedUser.getUserId());
-        return ResponseEntity.ok("User deleted successfully");
+        if (authenticatedUser.getUserId() != userId){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        try {
+            userService.deleteUser(userId,authenticatedUser.getUserId());
+            return ResponseEntity.noContent().build();
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @PutMapping("/change-password")

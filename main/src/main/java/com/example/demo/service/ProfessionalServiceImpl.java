@@ -5,10 +5,15 @@ import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.interfaces.ProfessionalRepository;
 import com.example.demo.service.interfaces.ProfessionalService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+@Service
+@Transactional
 public class ProfessionalServiceImpl implements ProfessionalService {
 
     private final ProfessionalRepository professionalRepository;
@@ -18,16 +23,11 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     }
 
     @Override
-    public Professional createProfessional(Professional professional) {
-        return professionalRepository.save(professional);
-    }
-
-    @Override
     public Professional updateProfessional(int professionalId, Professional upradetProfessional, UserEntity authenticatedUser) {
         Professional professional = professionalRepository.findById(professionalId)
                 .orElseThrow(() -> new EntityNotFoundException("Professional not found"));
 
-        if (professional.getUserId() != authenticatedUser.getUserId()) {
+        if (!Objects.equals(professional.getUserId(), authenticatedUser.getUserId())) {
             throw new SecurityException("You do not have permission to update this professional");
         }
         professional.setFirstName(upradetProfessional.getFirstName());
@@ -45,10 +45,9 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         Professional professional = professionalRepository.findById(professionalId)
                 .orElseThrow(() -> new EntityNotFoundException("Professional not found"));
 
-        if (professional.getUserId() != authenticatedUser.getUserId()) {
+        if (!Objects.equals(professional.getUserId(), authenticatedUser.getUserId())) {
             throw new SecurityException("You do not have permission to delete this professional");
         }
-
         professionalRepository.delete(professional);
     }
 

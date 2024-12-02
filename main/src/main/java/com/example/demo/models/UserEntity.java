@@ -24,6 +24,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+
     public int getUserId() {
         return userId;
     }

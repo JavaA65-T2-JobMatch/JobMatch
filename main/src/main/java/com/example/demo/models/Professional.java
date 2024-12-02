@@ -38,6 +38,15 @@ public class Professional {
     @Column(name = "profile_picture")
     private String profilePicture;
 
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
