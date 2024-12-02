@@ -9,11 +9,12 @@ public class Professional {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "professional_id")
     private int professionalId;
 
-    @OneToOne
+
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private UserEntity user;
+    private int user_id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -101,11 +102,11 @@ public class Professional {
         this.professionalId = professionalId;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public int getUserId() {
+        return user_id;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserId(int user_id) {
+        this.user_id = user_id;
     }
 }

@@ -4,6 +4,12 @@ import com.example.demo.Security.JwtConfig;
 import com.example.demo.dTOs.UserLoginDTO;
 import com.example.demo.dTOs.UserRegistrationDTO;
 import com.example.demo.enums.UserRole;
+import com.example.demo.models.City;
+import com.example.demo.models.Company;
+import com.example.demo.models.Professional;
+import com.example.demo.repositories.interfaces.CityRepository;
+import com.example.demo.repositories.interfaces.CompanyRepository;
+import com.example.demo.repositories.interfaces.ProfessionalRepository;
 import com.example.demo.service.interfaces.UserService;
 import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.interfaces.UserRepository;
@@ -22,22 +28,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ProfessionalRepository professionalRepository;
+    private final CompanyRepository companyRepository;
+    private final CityRepository cityRepository;
     PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final JwtConfig jwtConfig;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
+    public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtConfig jwtConfig, ProfessionalRepository professionalRepository, CompanyRepository companyRepository, CityRepository cityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
+        this.professionalRepository = professionalRepository;
+        this.companyRepository = companyRepository;
+        this.cityRepository = cityRepository;
     }
 
 
@@ -86,24 +99,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity register(UserRegistrationDTO registrationDTO) {
-        if (userRepository.existsByUsername(registrationDTO.getUsername())) {
-            throw new IllegalArgumentException("Username already exists");
-        }
+    public void register(UserRegistrationDTO registrationDTO) {
 
-        String hashedPassword = passwordEncoder.encode(registrationDTO.getPassword());
         UserEntity user = new UserEntity();
         user.setUsername(registrationDTO.getUsername());
-        user.setPassword(hashedPassword);
+        user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+        user.setRole(UserRole.valueOf(registrationDTO.getRole()));
+        UserEntity savedUser = userRepository.save(user);
 
-        try {
-            user.setRole(UserRole.valueOf(registrationDTO.getRole().toUpperCase()));
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid role: " + registrationDTO.getRole() +
-                    ". Allowed roles are: ADMIN, COMPANY, PROFESSIONAL.");
+        if ("PROFESSIONAL".equalsIgnoreCase(registrationDTO.getRole())) {
+            Professional professional = new Professional();
+            professional.setFirstName(registrationDTO.getFirstName());
+            professional.setLastName(registrationDTO.getLastName());
+            professional.setEmail(registrationDTO.getEmail());
+            professional.setUserId(savedUser.getUserId());
+
+            if (registrationDTO.getCityId() != null){
+                Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
+                if (city.isPresent()) {
+                    professional.setCityId(city.get().getCityId());
+                }else {
+                    throw new IllegalArgumentException("City not found");
+                }
+            }
+            professionalRepository.save(professional);
+        }else if ("COMPANY".equalsIgnoreCase(registrationDTO.getRole())) {
+            Company company = new Company();
+            company.setCompanyName(registrationDTO.getCompanyName());
+            company.setDescription(registrationDTO.getDescription());
+            company.setUser(savedUser.getUserId());
+            if (registrationDTO.getCityId() != null){
+                Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
+                if (city.isPresent()) {
+                    company.setCity_id(city.get().getCityId());
+                }else {
+                    throw new IllegalArgumentException("City not found");
+                }
+            }
+            companyRepository.save(company);
+        }else {
+            throw new IllegalArgumentException("Invalid role");
         }
 
-        return userRepository.save(user);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface UserService {
     @PreAuthorize("#authenticatedUserId == #userId")
     UserEntity updateUser(int userId, UserEntity updatedUserEntity, String Username);
 
-    UserEntity register(UserRegistrationDTO registrationDTO);
+    void register(UserRegistrationDTO registrationDTO);
     void changePassword(String username,String oldPassword,String newPassword);
 
     String login(UserLoginDTO loginDTO);
