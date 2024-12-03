@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/professional")
-public class ProfessionalController {
+public class ProfessionalRestController {
 
     private final ProfessionalService professionalService;
 
     @Autowired
-    public ProfessionalController(ProfessionalService professionalService) {
+    public ProfessionalRestController(ProfessionalService professionalService) {
         this.professionalService = professionalService;
     }
 

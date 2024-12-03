@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d493849-2e57-497c-bd3c-67f329abf49e" name="Changes" comment="Fixing register functions">
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/ProfessionalController.java" afterDir="false" />
+    <list default="true" id="9d493849-2e57-497c-bd3c-67f329abf49e" name="Changes" comment="Fixing Controllers name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/Security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Professional.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/Professional.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/models/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/repositories/interfaces/ProfessionalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/repositories/interfaces/ProfessionalRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/ProfessionalServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/ProfessionalServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/ProfessionalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/service/interfaces/ProfessionalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/ProfessionalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/ProfessionalRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/example/demo/controllers/REST/UserRestController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,6 +166,8 @@
       <workItem from="1732486150914" duration="100000" />
       <workItem from="1732529133209" duration="671000" />
       <workItem from="1732617566859" duration="15058000" />
+      <workItem from="1733222815231" duration="81000" />
+      <workItem from="1733233430181" duration="2935000" />
     </task>
     <task id="LOCAL-00001" summary="Base Program">
       <option name="closed" value="true" />
@@ -262,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733145709429</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Professional Controller and methods Added">
+      <option name="closed" value="true" />
+      <created>1733153736744</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1733153736744</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -291,6 +294,8 @@
     <MESSAGE value="fixxing problems" />
     <MESSAGE value="Adding LogIn/LogOut/Register/ChangingPassword and username" />
     <MESSAGE value="Fixing register functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing register functions" />
+    <MESSAGE value="Professional Controller and methods Added" />
+    <MESSAGE value="Fixing Controllers name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing Controllers name" />
   </component>
 </project>
