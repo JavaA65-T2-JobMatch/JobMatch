@@ -24,7 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserRestController {
 
     private final UserService userService;
     private final UserMapper userMapper;
@@ -32,7 +32,7 @@ public class UserController {
 
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper, AuthenticationManager authenticationManager) {
+    public UserRestController(UserService userService, UserMapper userMapper, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.authenticationManager = authenticationManager;
