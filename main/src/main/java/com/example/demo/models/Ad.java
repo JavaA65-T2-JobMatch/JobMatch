@@ -48,9 +48,9 @@ public class Ad {
 
     @ManyToMany
     @JoinTable(
-            name = "skills",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            name = "job_adds", // Join table name
+            joinColumns = @JoinColumn(name = "id"), // FK to Ad
+            inverseJoinColumns = @JoinColumn(name = "skillset") // FK to Skill
     )
     private Set<Skill> skills = new HashSet<>();
 

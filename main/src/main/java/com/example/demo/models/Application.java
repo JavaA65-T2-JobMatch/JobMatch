@@ -42,9 +42,9 @@ public class Application {
 
     @ManyToMany
     @JoinTable(
-            name = "application_skills", // Join table name
-            joinColumns = @JoinColumn(name = "application_id"), // FK to Application
-            inverseJoinColumns = @JoinColumn(name = "skill_id") // FK to Skill
+            name = "job_application", // Join table name
+            joinColumns = @JoinColumn(name = "id"), // FK to Application
+            inverseJoinColumns = @JoinColumn(name = "skillset") // FK to Skill
     )
     private Set<Skill> skills = new HashSet<>();
 
