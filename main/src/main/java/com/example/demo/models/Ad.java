@@ -2,9 +2,11 @@ package com.example.demo.models;
 
 import com.example.demo.enums.JobAdStatus;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "job_adds")
@@ -44,16 +46,21 @@ public class Ad {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(name = "skillset", nullable = false)
-    private Skill skillset;
+    @ManyToMany
+    @JoinTable(
+            name = "skills",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id")
+    )
+    private Set<Skill> skills = new HashSet<>();
 
     @OneToMany(mappedBy = "jobAd", fetch = FetchType.LAZY)
-    private List<Match> matches = new ArrayList<>();
-
+    private List<Match> matches;
 
     public Ad() {
     }
+
+    // Getters and setters
 
     public int getId() {
         return id;
@@ -135,12 +142,12 @@ public class Ad {
         this.updatedAt = updatedAt;
     }
 
-    public Skill getSkillset() {
-        return skillset;
+    public Set<Skill> getSkills() {
+        return skills;
     }
 
-    public void setSkillset(Skill skillset) {
-        this.skillset = skillset;
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
     }
 
     public List<Match> getMatches() {
@@ -150,5 +157,4 @@ public class Ad {
     public void setMatches(List<Match> matches) {
         this.matches = matches;
     }
-
 }

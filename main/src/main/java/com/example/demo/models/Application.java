@@ -2,9 +2,12 @@ package com.example.demo.models;
 
 import com.example.demo.enums.ApplicationStatus;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "job_application")
@@ -37,15 +40,21 @@ public class Application {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(name = "skillset", nullable = false)
-    private Skill skill;
+    @ManyToMany
+    @JoinTable(
+            name = "application_skills", // Join table name
+            joinColumns = @JoinColumn(name = "application_id"), // FK to Application
+            inverseJoinColumns = @JoinColumn(name = "skill_id") // FK to Skill
+    )
+    private Set<Skill> skills = new HashSet<>();
 
-    @OneToMany (mappedBy = "jobApplication", fetch = FetchType.LAZY)
-    List<Match> matches = new ArrayList<>();
+    @OneToMany(mappedBy = "jobApplication", fetch = FetchType.LAZY)
+    private List<Match> matches = new ArrayList<>();
 
     public Application() {
     }
+
+    // Getters and setters
 
     public int getId() {
         return id;
@@ -110,12 +119,13 @@ public class Application {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public Skill getSkill() {
-        return skill;
+
+    public Set<Skill> getSkills() {
+        return skills;
     }
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
     }
 
     public List<Match> getMatches() {
