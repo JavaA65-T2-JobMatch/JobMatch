@@ -94,10 +94,10 @@ CREATE TABLE IF NOT EXISTS `job_application` (
   UNIQUE KEY `job_application_pk_2` (`id`),
   KEY `job_application_professionals_professional_id_fk` (`professional_id`),
   KEY `job_application_skills_id_fk` (`skillset`),
-  KEY `location_id` (`location`),
+  KEY `job_application_cities_city_id` (`location`),
   CONSTRAINT `job_application_professionals_professional_id_fk` FOREIGN KEY (`professional_id`) REFERENCES `professionals` (`professional_id`),
   CONSTRAINT `job_application_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `location_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
+  CONSTRAINT `job_application_cities_city_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table jobmatch.job_application: ~0 rows (approximately)
