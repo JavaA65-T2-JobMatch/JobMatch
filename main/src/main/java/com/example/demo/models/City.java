@@ -2,6 +2,8 @@ package com.example.demo.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "cities")
 public class City {
@@ -31,4 +33,19 @@ public class City {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
+
+    @Override
+    public boolean equals(Object o ){
+        if (this == o) return true;
+        if (o == null) return false;
+        City city = (City) o;
+        return cityName.equals(city.cityName);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(cityName);
+    }
+
+
 }

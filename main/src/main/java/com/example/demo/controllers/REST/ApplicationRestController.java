@@ -1,10 +1,16 @@
 package com.example.demo.controllers.REST;
 
-import com.example.demo.enums.ApplicationStatus;
+import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.models.Ad;
 import com.example.demo.models.Application;
+import com.example.demo.models.Match;
 import com.example.demo.service.interfaces.ApplicationService;
+import com.example.demo.service.interfaces.JobAdService;
+import com.example.demo.service.interfaces.MatchService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,9 +19,13 @@ import java.util.List;
 public class ApplicationRestController {
 
     private final ApplicationService applicationService;
+    private final JobAdService jobAdService;
+    private final MatchService matchService;
 
-    public ApplicationRestController(ApplicationService applicationService) {
+    public ApplicationRestController(ApplicationService applicationService, JobAdService jobAdService, MatchService matchService) {
         this.applicationService = applicationService;
+        this.jobAdService = jobAdService;
+        this.matchService = matchService;
     }
 
     @GetMapping
@@ -61,6 +71,23 @@ public class ApplicationRestController {
 
         Application updatedApplication = applicationService.saveApplication(existingApplication);
         return ResponseEntity.ok(updatedApplication);
+    }
+
+    @PostMapping("/{appId}/match/{adId}")
+    public ResponseEntity<Match> matchJobAd(@PathVariable int appId, @PathVariable int adId){
+        try {
+            Ad jobAd = jobAdService.getJobAdById(adId);
+            Application application = applicationService.getApplicationById(appId);
+
+            Match match = matchService.createMatch(new Match(application, jobAd));
+            matchService.tryMatching(match);
+
+            return ResponseEntity.ok(match);
+        } catch (EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (IllegalArgumentException e){
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

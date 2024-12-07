@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "skills")
@@ -19,6 +20,9 @@ public class Skill {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @ManyToMany(mappedBy = "skillset")
+    Set<Ad> ads;
 
     public int getId() {
         return id;

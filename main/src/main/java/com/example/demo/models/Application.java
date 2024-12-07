@@ -52,7 +52,7 @@ public class Application {
     )
     private Set<Skill> skills = new HashSet<>();
 
-    @OneToMany(mappedBy = "jobApplication", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobApplication", fetch = FetchType.EAGER)
     private List<Match> matches = new ArrayList<>();
 
     public Application() {
