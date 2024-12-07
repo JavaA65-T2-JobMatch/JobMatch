@@ -9,11 +9,13 @@ import java.util.List;
 @Repository
 public interface JobAdRepository extends JpaRepository<Ad, Integer> {
 
-    List<Ad> findByCompany_CompanyId(int companyId);
+    List<Ad> findByCompanyCompanyId(int companyId);
 
-    List<Ad>  findByLocation_CityId(int locationId);
+    List<Ad>  findByLocationCityId(int locationId);
 
     List<Ad> findByStatus(JobAdStatus status);
 
     List<Ad> findByTitleContainingIgnoreCase(String keyword);
+
+    Ad getAdById(int id);
 }

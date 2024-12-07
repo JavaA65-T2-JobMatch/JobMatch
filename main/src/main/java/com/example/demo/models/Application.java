@@ -30,6 +30,10 @@ public class Application {
     @Column(name = "motivation", length = 255)
     private String motivation;
 
+    @ManyToOne
+    @JoinColumn(name = "location", nullable = false)
+    private City location;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ApplicationStatus status = ApplicationStatus.ACTIVE;
@@ -42,9 +46,9 @@ public class Application {
 
     @ManyToMany
     @JoinTable(
-            name = "job_application", // Join table name
+            name = "skills", // Join table name
             joinColumns = @JoinColumn(name = "id"), // FK to Application
-            inverseJoinColumns = @JoinColumn(name = "skillset") // FK to Skill
+            inverseJoinColumns = @JoinColumn(name = "id") // FK to Skill
     )
     private Set<Skill> skills = new HashSet<>();
 
@@ -134,5 +138,13 @@ public class Application {
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
+    }
+
+    public City getLocation() {
+        return location;
+    }
+
+    public void setLocation(City location) {
+        this.location = location;
     }
 }

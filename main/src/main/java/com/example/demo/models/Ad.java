@@ -29,6 +29,10 @@ public class Ad {
     @Column(name = "salary_max", precision = 10)
     private Double salaryMax;
 
+    @Column(name = "salary_threshold", columnDefinition = "integer default 0")
+    private Double salaryThreshold;
+
+
     @Column(name = "description", length = 255)
     private String description;
 
@@ -101,6 +105,15 @@ public class Ad {
     public void setSalaryMax(Double salaryMax) {
         this.salaryMax = salaryMax;
     }
+
+    public Double getSalaryThreshold() {
+        return salaryThreshold;
+    }
+
+    public void setSalaryThreshold(Double salaryThreshold) {
+        this.salaryThreshold = salaryThreshold;
+    }
+
 
     public String getDescription() {
         return description;
