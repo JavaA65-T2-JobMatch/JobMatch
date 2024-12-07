@@ -26,7 +26,7 @@ public class Company{
     private String logo;
 
     @Column(name = "city", nullable = false)
-    private int city_id;
+    private int cityId;
 
     public String getCompanyName() {
         return companyName;
@@ -60,12 +60,12 @@ public class Company{
         this.logo = logo;
     }
 
-    public int getCity_id() {
-        return city_id;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setCity_id(int city_id) {
-        this.city_id = city_id;
+    public void setCityId(int city_id) {
+        this.cityId = city_id;
     }
 
     public int getCompanyId() {

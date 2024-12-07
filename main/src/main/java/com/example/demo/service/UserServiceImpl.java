@@ -86,9 +86,9 @@ public class UserServiceImpl implements UserService {
         if (user.getRole() == UserRole.PROFESSIONAL) {
             professionalRepository.deleteByUserId(userId);
         }
-//        else if (user.getRole() == UserRole.COMPANY) {
-////            companyRepository.deleteById(userId);
-////        }TODO
+        else if (user.getRole() == UserRole.COMPANY) {
+            companyRepository.deleteById(userId);
+        }
 
         userRepository.delete(user);
     }
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
             if (registrationDTO.getCityId() != null){
                 Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
                 if (city.isPresent()) {
-                    company.setCity_id(city.get().getCityId());
+                    company.setCityId(city.get().getCityId());
                 }else {
                     throw new IllegalArgumentException("City not found");
                 }

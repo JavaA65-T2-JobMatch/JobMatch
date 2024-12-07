@@ -5,14 +5,22 @@ import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.interfaces.CompanyRepository;
 import com.example.demo.service.interfaces.CompanyService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+
+
+@Service
+@Transactional
 public class CompanyServiceImpl  implements CompanyService {
 
     private final CompanyRepository companyRepository;
 
+    @Autowired
     public CompanyServiceImpl(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
@@ -33,7 +41,7 @@ public class CompanyServiceImpl  implements CompanyService {
         company.setCompanyName(updatedCompany.getCompanyName());
         company.setDescription(updatedCompany.getDescription());
         company.setContactInfo(updatedCompany.getContactInfo());
-        company.setCity_id(updatedCompany.getCity_id());
+        company.setCityId(updatedCompany.getCityId());
         company.setLogo(updatedCompany.getLogo());
 
         return companyRepository.save(company);
