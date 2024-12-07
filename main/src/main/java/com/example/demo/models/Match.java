@@ -21,15 +21,6 @@ public class Match {
     @JoinColumn(name = "job_ad_id", nullable = false)
     private Ad jobAd;
 
-    @Column(name = "salary_threshold_percentage")
-    private double thresholdPercent;
-
-    @Column(name = "min_salary", nullable = false)
-    private double minSalary;
-
-    @Column(name = "max_salary", nullable = false)
-    private double maxSalary;
-
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
     private City city_id;
@@ -45,12 +36,15 @@ public class Match {
     private LocalDateTime matchDate= LocalDateTime.now();
 
 
-//    public Match(){}
-//
-//    public Match(Application jobApplication, Ad jobAd){
-//        this.jobApplication = jobApplication;
-//        this.jobAd = jobAd;
-//    }
+
+
+    public Match(){}
+
+    public Match(Application jobApplication, Ad jobAd){
+        this.jobApplication = jobApplication;
+        this.jobAd = jobAd;
+    }
+
 
     public int getId() {
         return id;

@@ -9,7 +9,8 @@ import java.util.List;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
-    List<Application> findAllByProfessional_ProfessionalId(int professionalId);
+    List<Application> findAllByProfessionalProfessionalId(int professionalId);
     List<Application> findByStatus(ApplicationStatus status);
 
+    Application getApplicationById(int id);
 }

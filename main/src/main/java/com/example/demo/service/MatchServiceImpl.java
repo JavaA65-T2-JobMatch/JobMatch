@@ -1,13 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.enums.MatchStatus;
+import com.example.demo.models.Ad;
+import com.example.demo.models.Application;
 import com.example.demo.models.Match;
 import com.example.demo.repositories.interfaces.MatchRepository;
 import com.example.demo.service.interfaces.MatchService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MatchServiceImpl implements MatchService {
     private final MatchRepository matchRepository;
     public MatchServiceImpl(MatchRepository matchRepository){
@@ -33,7 +37,6 @@ public class MatchServiceImpl implements MatchService {
         matchRepository.deleteById(id);
     }
 
-    // get all matches when opening the list of matches on an application
     @Override
     public List<Match> getAllMatchesByApplicationId(int applicationId) {
         return matchRepository.findAllByJobApplicationId(applicationId);
@@ -59,5 +62,46 @@ public class MatchServiceImpl implements MatchService {
                 .filter(match -> match.getStatus() == MatchStatus.REJECTED).toList();
     }
 
+    @Override
+    public void tryMatching(Match match){
+        if (salaryWithinThreshold(match) && skillsMatch(match) && locationMatch(match)){
+            match.setStatus(MatchStatus.ACCEPTED);
 
+        }
+        matchRepository.save(match);
+    }
+
+    private boolean salaryWithinThreshold(Match match){
+        Ad jobAd = match.getJobAd();
+        Application application = match.getJobApplication();
+        double adMax = jobAd.getSalaryMax();
+        double adMin = jobAd.getSalaryMin();
+        double appMax = application.getDesiredSalaryMax();
+        double appMin = application.getDesiredSalaryMin();
+        if (jobAd.getSalaryThreshold() != 0){
+            return (appMax <= adMax && appMax >= adMin) ||
+                    (appMax >= adMin && appMin <= adMax);
+        } else {
+            double upperThreshold = adMax + calculatePercentage(jobAd.getSalaryThreshold(), adMax);
+            double lowerThreshold = adMin - calculatePercentage(jobAd.getSalaryThreshold(), adMin);
+            return (appMax  <= upperThreshold && appMin >= lowerThreshold) ||
+                    (appMin >= lowerThreshold && appMin <= upperThreshold);
+        }
+    }
+
+    private boolean skillsMatch(Match match){
+        Ad jobAd = match.getJobAd();
+        Application application = match.getJobApplication();
+        return jobAd.getSkills().equals(application.getSkills());
+    }
+
+    private boolean locationMatch(Match match){
+        Ad jobAd = match.getJobAd();
+        Application application = match.getJobApplication();
+        return jobAd.getLocation().equals(application.getLocation());
+    }
+
+    public double calculatePercentage(double obtained, double total){
+        return (obtained / 100) * total;
+    }
 }

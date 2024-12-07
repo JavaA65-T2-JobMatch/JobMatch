@@ -25,7 +25,7 @@ public class JobAdServiceImpl implements JobAdService {
 
     @Override
     public List<Ad> getJobAdsByCompanyId(int companyId) {
-        return jobAdRepository.findByCompany_CompanyId(companyId);
+        return jobAdRepository.findByCompanyCompanyId(companyId);
     }
 
     @Override
@@ -43,7 +43,12 @@ public class JobAdServiceImpl implements JobAdService {
 
     @Override
     public List<Ad> searchJobAdsByLocation(int locationId) {
-        return jobAdRepository.findByLocation_CityId(locationId);
+        return jobAdRepository.findByLocationCityId(locationId);
+    }
+
+    @Override
+    public Ad getJobAdById(int jobAd) {
+        return jobAdRepository.getAdById(jobAd);
     }
 
     //ToDo Add find successful and rejected matches for an ad

@@ -14,5 +14,7 @@ public interface ApplicationService {
 
     Application saveApplication(Application application);
 
+    Application getApplicationById(int id);
+
     void deleteApplication(int id);
 }

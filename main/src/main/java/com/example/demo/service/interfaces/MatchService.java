@@ -13,5 +13,6 @@ public interface MatchService {
     List<Match> getAllSuccessfulMatches();
     List<Match> getAllRejectedMatches();
     Optional<Match> getMatchById(int matchId);
+    void tryMatching(Match match);
     void deleteMatch(int id);
 }

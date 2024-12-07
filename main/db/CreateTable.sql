@@ -56,8 +56,9 @@ CREATE TABLE IF NOT EXISTS `job_adds` (
   `id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `salary_min` decimal(10,2) DEFAULT NULL,
-  `salary_max` decimal(10,2) DEFAULT NULL,
+  `salary_min` decimal(10,2) DEFAULT 0,
+  `salary_max` decimal(10,2) DEFAULT 0,
+  `salary_threshold` int(11) DEFAULT 0,
   `description` varchar(255) DEFAULT NULL,
   `location` int(11) NOT NULL,
   `status` enum('Active','Archived') DEFAULT NULL,
@@ -84,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `job_application` (
   `desired_salary_min` decimal(10,2) DEFAULT NULL,
   `desired_salary_max` decimal(10,2) DEFAULT NULL,
   `motivation` varchar(255) DEFAULT NULL,
+  `location` int(11) NOT NULL,
   `status` enum('Active','Hidden','Private','Matched') DEFAULT 'Active',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -92,8 +94,10 @@ CREATE TABLE IF NOT EXISTS `job_application` (
   UNIQUE KEY `job_application_pk_2` (`id`),
   KEY `job_application_professionals_professional_id_fk` (`professional_id`),
   KEY `job_application_skills_id_fk` (`skillset`),
+  KEY `location_id` (`location`),
   CONSTRAINT `job_application_professionals_professional_id_fk` FOREIGN KEY (`professional_id`) REFERENCES `professionals` (`professional_id`),
-  CONSTRAINT `job_application_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`id`) ON DELETE CASCADE
+  CONSTRAINT `job_application_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `location_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table jobmatch.job_application: ~0 rows (approximately)
@@ -103,10 +107,7 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `job_application_id` int(11) NOT NULL,
   `job_ad_id` int(11) NOT NULL,
-  `salary_threshold_percentage` float,
-  `min_salary` float NOT NULL ,
-  `max_salary` float NOT NULL ,
-  `city_id` int NOT NULL ,
+  `city_id` int NOT NULL,
   `skills_id` int NOT NULL ,
   `match_status` enum('Pending','Accepted','Rejected') DEFAULT 'Pending',
   `match_date` timestamp NULL DEFAULT current_timestamp(),

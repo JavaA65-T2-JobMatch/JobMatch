@@ -30,6 +30,10 @@ public class Application {
     @Column(name = "motivation", length = 255)
     private String motivation;
 
+    @ManyToOne
+    @JoinColumn(name = "location", nullable = false)
+    private City location;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ApplicationStatus status = ApplicationStatus.ACTIVE;
@@ -48,7 +52,7 @@ public class Application {
     )
     private Set<Skill> skills = new HashSet<>();
 
-    @OneToMany(mappedBy = "jobApplication", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jobApplication", fetch = FetchType.EAGER)
     private List<Match> matches = new ArrayList<>();
 
     public Application() {
@@ -134,5 +138,13 @@ public class Application {
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
+    }
+
+    public City getLocation() {
+        return location;
+    }
+
+    public void setLocation(City location) {
+        this.location = location;
     }
 }

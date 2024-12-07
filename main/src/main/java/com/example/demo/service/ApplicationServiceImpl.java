@@ -24,7 +24,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<Application> getApplicationsByProfessionalId(int professionalId) {
-        return applicationRepository.findAllByProfessional_ProfessionalId(professionalId);
+        return applicationRepository.findAllByProfessionalProfessionalId(professionalId);
     }
 
     @Override
@@ -37,6 +37,11 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public Application saveApplication(Application application) {
         return applicationRepository.save(application);
+    }
+
+    @Override
+    public Application getApplicationById(int id) {
+        return applicationRepository.getApplicationById(id);
     }
 
     @Override
