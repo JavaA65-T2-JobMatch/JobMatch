@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Skill</title>
+</head>
+<body>
+<h1>Edit Skill</h1>
+<form th:action="@{/skills/edit/{id}(id=${skill.id})}" th:object="${skill}" method="post">
+    <label for="name">Skill Name:</label>
+    <input type="text" id="name" th:field="*{name}" required>
+    <button type="submit">Update</button>
+</form>
+<a href="/skills">Cancel</a>
+</body>
+</html>

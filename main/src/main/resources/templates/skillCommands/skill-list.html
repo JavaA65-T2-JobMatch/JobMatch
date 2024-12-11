@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang = "en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Skill List</title>
+</head>
+<body>
+<h1>Skill List</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="skill : ${skills}">
+    <td th:text="${skill.id}"></td>
+    <td th:text="${skill.name}"></td>
+    <td>
+      <a th:href="@{/skills/{id}(id=${skill.id})}">View</a>
+      <a th:href="@{/skills/edit/{id}(id=${skill.id})}">Edit</a>
+      <a th:href="@{/skills/delete/{id}(id=${skill.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a href="/skills/create">Create New Skill</a>
+</body>
+</html>
