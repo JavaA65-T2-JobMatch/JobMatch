@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications List</title>
+</head>
+<body>
+<h1>Applications List</h1>
+<a href="/applicationCommands/create-application">Create New Application</a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Status</th>
+        <th>Motivation</th>
+        <th>Desired Salary Min</th>
+        <th>Desired Salary Max</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="application : ${applications}">
+        <td th:text="${application.id}"></td>
+        <td th:text="${application.status}"></td>
+        <td th:text="${application.motivation}"></td>
+        <td th:text="${application.desiredSalaryMin}"></td>
+        <td th:text="${application.desiredSalaryMax}"></td>
+        <td>
+            <a th:href="@{/applications/edit/{id}(id=${application.id})}">Edit</a>
+            <form th:action="@{/applications/delete/{id}(id=${application.id})}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+            <a th:href="@{/applications/{id}/match/{adId}(appId=${application.id}, adId=${adId})}">Match</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
