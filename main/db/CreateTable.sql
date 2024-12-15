@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `job_adds` (
   KEY `company_id` (`company`),
   KEY `location_id` (`location`),
   KEY `job_adds_skills_id_fk` (`skillset`),
-  CONSTRAINT `company_id` FOREIGN KEY (`company`) REFERENCES `companies` (`id`),
-  CONSTRAINT `job_adds_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `company_id` FOREIGN KEY (`company`) REFERENCES `companies` (`company_id`),
+  CONSTRAINT `job_adds_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`skill_id`) ON DELETE CASCADE,
   CONSTRAINT `location_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `job_application` (
   KEY `job_application_skills_id_fk` (`skillset`),
   KEY `job_application_cities_city_id` (`location`),
   CONSTRAINT `job_application_professionals_professional_id_fk` FOREIGN KEY (`professional`) REFERENCES `professionals` (`professional_id`),
-  CONSTRAINT `job_application_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `job_application_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`skill_id`) ON DELETE CASCADE,
   CONSTRAINT `job_application_cities_city_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -114,10 +114,10 @@ CREATE TABLE IF NOT EXISTS `matches` (
   KEY `matches_job_adds_id_fk` (`job_ad`),
   KEY `matches_cities_city_id_fk` (`city_id`),
   KEY `matches_skills_id_fk` (`skills_id`),
-  CONSTRAINT `matches_job_adds_id_fk` FOREIGN KEY (`job_ad`) REFERENCES `job_adds` (`id`),
-  CONSTRAINT `matches_job_application_id_fk` FOREIGN KEY (`job_application`) REFERENCES `job_application` (`id`),
+  CONSTRAINT `matches_job_adds_id_fk` FOREIGN KEY (`job_ad`) REFERENCES `job_adds` (`ad_id`),
+  CONSTRAINT `matches_job_application_id_fk` FOREIGN KEY (`job_application`) REFERENCES `job_application` (`application_id`),
   CONSTRAINT `matches_cities_city_id_fk` FOREIGN KEY (`city_id`) REFERENCES  `cities` (`city_id`),
-    CONSTRAINT `matches_skills_id_fk` FOREIGN KEY (`skills_id`) REFERENCES  `skills` (`id`)
+    CONSTRAINT `matches_skills_id_fk` FOREIGN KEY (`skills_id`) REFERENCES  `skills` (`skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table jobmatch.matches: ~0 rows (approximately)
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `skills` (
 ) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table jobmatch.skills: ~90 rows (approximately)
-INSERT INTO `skills` (`id`, `name`, `created_by`, `created_at`) VALUES
+INSERT INTO `skills` (`skill_id`, `name`, `created_by`, `created_at`) VALUES
 	(1, 'Java', 'administrator', '2024-11-21 09:36:16'),
 	(2, 'Python', 'administrator', '2024-11-21 09:36:16'),
 	(3, 'JavaScript', 'administrator', '2024-11-21 09:36:16'),
