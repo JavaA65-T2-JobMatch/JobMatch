@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-
 
 
 @Service
@@ -60,8 +58,8 @@ public class CompanyServiceImpl  implements CompanyService {
     }
 
     @Override
-    public Optional<Company> getCompanyById(int CompanyId) {
-        return companyRepository.findById(CompanyId);
+    public Company getCompanyById(int CompanyId) {
+        return companyRepository.findByCompanyId(CompanyId);
     }
 
     @Override

@@ -27,6 +27,11 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
+    public Skill getSkillByName(String name) {
+        return skillRepository.findByName(name);
+    }
+
+    @Override
     public SkillDTO createSkill(SkillDTO skillDTO) {
 
         Optional<Skill> existingSkill = Optional.ofNullable(skillRepository.findByName(skillDTO.getName()));

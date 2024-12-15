@@ -8,6 +8,7 @@ import java.util.List;
 public interface SkillService {
 
     SkillDTO getSkillById(int id);
+    Skill getSkillByName(String name);
 
     SkillDTO createSkill(SkillDTO skillDTO);
 

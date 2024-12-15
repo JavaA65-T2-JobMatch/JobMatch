@@ -1,7 +1,9 @@
 package com.example.demo.controllers.REST;
 
+import com.example.demo.dTOs.JobAdDTO;
 import com.example.demo.enums.JobAdStatus;
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.helpers.AdMapper;
 import com.example.demo.models.Ad;
 import com.example.demo.models.Application;
 import com.example.demo.models.Match;
@@ -22,11 +24,13 @@ public class JobAdRestController {
     private final JobAdService jobAdService;
     private final ApplicationService applicationService;
     private final MatchService matchService;
+    private final AdMapper adMapper;
 
-    public JobAdRestController(JobAdService jobAdService, ApplicationService applicationService, MatchService matchService) {
+    public JobAdRestController(JobAdService jobAdService, ApplicationService applicationService, MatchService matchService, AdMapper adMapper) {
         this.jobAdService = jobAdService;
         this.applicationService = applicationService;
         this.matchService = matchService;
+        this.adMapper = adMapper;
     }
 
     @GetMapping
@@ -71,8 +75,8 @@ public class JobAdRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Ad> saveJobAd(@RequestBody Ad jobAd) {
-        Ad createdJobAd = jobAdService.saveJobAd(jobAd);
+    public ResponseEntity<Ad> saveJobAd(@RequestBody JobAdDTO jobAd) {
+        Ad createdJobAd = adMapper.fromDto(jobAd);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdJobAd);
     }
 
