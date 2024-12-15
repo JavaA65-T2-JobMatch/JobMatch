@@ -40,7 +40,7 @@ public class SkillMvcController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("skill", new SkillDTO());
-        return "skillCommands/edit-skill";
+        return "skillCommands/create-skill";
     }
 
     @PostMapping
