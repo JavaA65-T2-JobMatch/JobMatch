@@ -18,7 +18,7 @@ public class Application {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "professional_id", nullable = false)
+    @JoinColumn(name = "professional", nullable = false)
     private Professional professional;
 
     @Column(name = "desired_salary_min", precision = 10)
@@ -47,7 +47,7 @@ public class Application {
     @ManyToMany
     @JoinTable(
             name = "job_application", // Join table name
-            joinColumns = @JoinColumn(name = "id"), // FK to Application
+            joinColumns = @JoinColumn(name = "application_id"), // FK to Application
             inverseJoinColumns = @JoinColumn(name = "skillset") // FK to Skill
     )
     private Set<Skill> skills = new HashSet<>();

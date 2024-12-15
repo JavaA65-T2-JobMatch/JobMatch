@@ -14,11 +14,11 @@ public class Match {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "job_application_id", nullable = false)
+    @JoinColumn(name = "job_application", nullable = false)
     private Application jobApplication;
 
     @ManyToOne
-    @JoinColumn(name = "job_ad_id", nullable = false)
+    @JoinColumn(name = "job_ad", nullable = false)
     private Ad jobAd;
 
     @ManyToOne
@@ -26,7 +26,7 @@ public class Match {
     private City city_id;
 
     @OneToMany
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "skill_id")
     private List<Skill> skill;
 
     @Column(name = "match_status", nullable = false)
