@@ -33,7 +33,7 @@ public class CompanyRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Company> getCompanyById(@PathVariable int id) {
-        Optional<Company> company = companyService.getCompanyById(id);
+        Optional<Company> company = Optional.ofNullable(companyService.getCompanyById(id));
         return company.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 

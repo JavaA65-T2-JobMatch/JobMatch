@@ -4,24 +4,22 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class JobAdDTO {
-    private int id;
+
     private String title;
-    private BigDecimal salaryMin;
-    private BigDecimal salaryMax;
+    private double salaryMin;
+    private double salaryMax;
     private String description;
     private String status;
     private int companyId;
     private int locationId;
     private String requirements;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+
 
     public JobAdDTO() {}
 
-    public JobAdDTO(int id, String title, BigDecimal salaryMin, BigDecimal salaryMax, String description,
-                    String status, int companyId, int locationId, String requirements,
-                    LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public JobAdDTO( String title, double salaryMin, double salaryMax, String description,
+                    String status, int companyId, int locationId, String requirements
+                    ) {
         this.title = title;
         this.salaryMin = salaryMin;
         this.salaryMax = salaryMax;
@@ -30,18 +28,11 @@ public class JobAdDTO {
         this.companyId = companyId;
         this.locationId = locationId;
         this.requirements = requirements;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+
     }
 
     // Getters and Setters
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -51,19 +42,19 @@ public class JobAdDTO {
         this.title = title;
     }
 
-    public BigDecimal getSalaryMin() {
+    public double getSalaryMin() {
         return salaryMin;
     }
 
-    public void setSalaryMin(BigDecimal salaryMin) {
+    public void setSalaryMin(double salaryMin) {
         this.salaryMin = salaryMin;
     }
 
-    public BigDecimal getSalaryMax() {
+    public double getSalaryMax() {
         return salaryMax;
     }
 
-    public void setSalaryMax(BigDecimal salaryMax) {
+    public void setSalaryMax(double salaryMax) {
         this.salaryMax = salaryMax;
     }
 
@@ -107,19 +98,4 @@ public class JobAdDTO {
         this.requirements = requirements;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-}
+  }

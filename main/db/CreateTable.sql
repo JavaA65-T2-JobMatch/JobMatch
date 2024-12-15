@@ -31,15 +31,15 @@ CREATE TABLE IF NOT EXISTS `cities` (
 
 -- Dumping structure for table jobmatch.companies
 CREATE TABLE IF NOT EXISTS `companies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL AUTO_INCREMENT,
   `company_name` varchar(30) NOT NULL,
   `description` varchar(300) DEFAULT NULL,
   `contact_info` varchar(255) DEFAULT NULL,
   `logo` varchar(255) DEFAULT NULL,
   `city` int(11) DEFAULT NULL,
   `user` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `companies_pk_2` (`id`),
+  PRIMARY KEY (`company_id`),
+  UNIQUE KEY `companies_pk_2` (`company_id`),
   KEY `city` (`city`),
   KEY `companies_users_id_fk` (`user`),
   CONSTRAINT `city` FOREIGN KEY (`city`) REFERENCES `cities` (`city_id`),
@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS `companies` (
 
 -- Dumping structure for table jobmatch.job_adds
 CREATE TABLE IF NOT EXISTS `job_adds` (
-  `id` int(11) NOT NULL,
-  `company_id` int(11) NOT NULL,
+  `ad_id` int(11) NOT NULL,
+  `company` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
   `salary_min` decimal(10,2) DEFAULT 0,
   `salary_max` decimal(10,2) DEFAULT 0,
@@ -63,12 +63,12 @@ CREATE TABLE IF NOT EXISTS `job_adds` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `skillset` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `job_adds_pk_2` (`id`),
-  KEY `company_id` (`company_id`),
+  PRIMARY KEY (`ad_id`),
+  UNIQUE KEY `job_adds_pk_2` (`ad_id`),
+  KEY `company_id` (`company`),
   KEY `location_id` (`location`),
   KEY `job_adds_skills_id_fk` (`skillset`),
-  CONSTRAINT `company_id` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`),
+  CONSTRAINT `company_id` FOREIGN KEY (`company`) REFERENCES `companies` (`id`),
   CONSTRAINT `job_adds_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
   CONSTRAINT `location_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `job_adds` (
 
 -- Dumping structure for table jobmatch.job_application
 CREATE TABLE IF NOT EXISTS `job_application` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `professional_id` int(11) NOT NULL,
+  `application_id` int(11) NOT NULL AUTO_INCREMENT,
+  `professional` int(11) NOT NULL,
   `desired_salary_min` decimal(10,2) DEFAULT NULL,
   `desired_salary_max` decimal(10,2) DEFAULT NULL,
   `motivation` varchar(255) DEFAULT NULL,
@@ -87,12 +87,12 @@ CREATE TABLE IF NOT EXISTS `job_application` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `skillset` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `job_application_pk_2` (`id`),
-  KEY `job_application_professionals_professional_id_fk` (`professional_id`),
+  PRIMARY KEY (`application_id`),
+  UNIQUE KEY `job_application_pk_2` (`application_id`),
+  KEY `job_application_professionals_professional_id_fk` (`professional`),
   KEY `job_application_skills_id_fk` (`skillset`),
   KEY `job_application_cities_city_id` (`location`),
-  CONSTRAINT `job_application_professionals_professional_id_fk` FOREIGN KEY (`professional_id`) REFERENCES `professionals` (`professional_id`),
+  CONSTRAINT `job_application_professionals_professional_id_fk` FOREIGN KEY (`professional`) REFERENCES `professionals` (`professional_id`),
   CONSTRAINT `job_application_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`id`) ON DELETE CASCADE,
   CONSTRAINT `job_application_cities_city_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -101,21 +101,21 @@ CREATE TABLE IF NOT EXISTS `job_application` (
 
 -- Dumping structure for table jobmatch.matches
 CREATE TABLE IF NOT EXISTS `matches` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_application_id` int(11) NOT NULL,
-  `job_ad_id` int(11) NOT NULL,
+  `match_id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_application` int(11) NOT NULL,
+  `job_ad` int(11) NOT NULL,
   `city_id` int NOT NULL,
   `skills_id` int NOT NULL ,
   `match_status` enum('Pending','Accepted','Rejected') DEFAULT 'Pending',
   `match_date` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `matches_pk_2` (`id`),
-  KEY `matches_job_application_id_fk` (`job_application_id`),
-  KEY `matches_job_adds_id_fk` (`job_ad_id`),
+  PRIMARY KEY (`match_id`),
+  UNIQUE KEY `matches_pk_2` (`match_id`),
+  KEY `matches_job_application_id_fk` (`job_application`),
+  KEY `matches_job_adds_id_fk` (`job_ad`),
   KEY `matches_cities_city_id_fk` (`city_id`),
   KEY `matches_skills_id_fk` (`skills_id`),
-  CONSTRAINT `matches_job_adds_id_fk` FOREIGN KEY (`job_ad_id`) REFERENCES `job_adds` (`id`),
-  CONSTRAINT `matches_job_application_id_fk` FOREIGN KEY (`job_application_id`) REFERENCES `job_application` (`id`),
+  CONSTRAINT `matches_job_adds_id_fk` FOREIGN KEY (`job_ad`) REFERENCES `job_adds` (`id`),
+  CONSTRAINT `matches_job_application_id_fk` FOREIGN KEY (`job_application`) REFERENCES `job_application` (`id`),
   CONSTRAINT `matches_cities_city_id_fk` FOREIGN KEY (`city_id`) REFERENCES  `cities` (`city_id`),
     CONSTRAINT `matches_skills_id_fk` FOREIGN KEY (`skills_id`) REFERENCES  `skills` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -146,12 +146,12 @@ CREATE TABLE IF NOT EXISTS `professionals` (
 
 -- Dumping structure for table jobmatch.skills
 CREATE TABLE IF NOT EXISTS `skills` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `skill_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `created_by` enum('administrator') DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `skills_pk_2` (`id`),
+  PRIMARY KEY (`skill_id`),
+  UNIQUE KEY `skills_pk_2` (`skill_id`),
   UNIQUE KEY `skills_pk_3` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 

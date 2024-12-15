@@ -17,7 +17,7 @@ public class Ad {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
+    @JoinColumn(name = "company_id", referencedColumnName = "id", nullable = false)
     private Company company;
 
     @Column(name = "title", length = 50, nullable = false)

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
     Optional<Company> findByCompanyName(String companyName);
-
+    Company findByCompanyId(int companyId);
 
     @Modifying
     @Transactional
