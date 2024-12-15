@@ -32,21 +32,18 @@ CREATE TABLE IF NOT EXISTS `cities` (
 -- Dumping structure for table jobmatch.companies
 CREATE TABLE IF NOT EXISTS `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
   `company_name` varchar(30) NOT NULL,
   `description` varchar(300) DEFAULT NULL,
   `contact_info` varchar(255) DEFAULT NULL,
   `logo` varchar(255) DEFAULT NULL,
   `city` int(11) DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `companies_pk_2` (`id`),
-  UNIQUE KEY `companies_pk_3` (`username`),
   KEY `city` (`city`),
-  KEY `companies_users_id_fk` (`user_id`),
+  KEY `companies_users_id_fk` (`user`),
   CONSTRAINT `city` FOREIGN KEY (`city`) REFERENCES `cities` (`city_id`),
-  CONSTRAINT `companies_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `companies_users_id_fk` FOREIGN KEY (`user`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table jobmatch.companies: ~0 rows (approximately)
@@ -128,23 +125,21 @@ CREATE TABLE IF NOT EXISTS `matches` (
 -- Dumping structure for table jobmatch.professionals
 CREATE TABLE IF NOT EXISTS `professionals` (
   `professional_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(30) NOT NULL,
-  `password` varchar(30) DEFAULT NULL,
   `email` varchar(30) NOT NULL,
   `city` int(11) NOT NULL,
   `short_summary` varchar(300) DEFAULT NULL,
   `status` enum('Active','Busy') NOT NULL,
   `profile_picture` varchar(300) DEFAULT NULL,
-  `user_Id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
   PRIMARY KEY (`professional_id`),
   UNIQUE KEY `Professionals_pk_2` (`professional_id`),
   UNIQUE KEY `Professionals_pk_3` (`email`),
   KEY `professional_city` (`city`),
-  KEY `professionals_users_id_fk` (`user_Id`),
+  KEY `professionals_users_id_fk` (`user`),
   CONSTRAINT `professional_city` FOREIGN KEY (`city`) REFERENCES `cities` (`city_id`),
-  CONSTRAINT `professionals_users_id_fk` FOREIGN KEY (`user_Id`) REFERENCES `users` (`user_id`)
+  CONSTRAINT `professionals_users_id_fk` FOREIGN KEY (`user`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Dumping data for table jobmatch.professionals: ~0 rows (approximately)
@@ -256,8 +251,8 @@ INSERT INTO `skills` (`id`, `name`, `created_by`, `created_at`) VALUES
 -- Dumping structure for table jobmatch.users
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL DEFAULT 'default_nickname',
+  `password` varchar(255) NOT NULL DEFAULT 'default_password',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `role` enum('COMPANY','PROFESSIONAL','ADMIN') DEFAULT 'PROFESSIONAL',
   PRIMARY KEY (`user_id`),

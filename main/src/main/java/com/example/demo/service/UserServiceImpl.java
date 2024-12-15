@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
             professional.setFirstName(registrationDTO.getFirstName());
             professional.setLastName(registrationDTO.getLastName());
             professional.setEmail(registrationDTO.getEmail());
+            professional.setShortSummary(registrationDTO.getDescription());
             professional.setUserId(savedUser.getUserId());
 
             if (registrationDTO.getCityId() != null){

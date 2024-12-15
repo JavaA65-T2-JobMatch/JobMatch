@@ -1,10 +1,7 @@
 package com.example.demo.dTOs;
 
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-
-public class ProffesionalDTO {
+public class ProfessionalDTO {
 
     private String firstName;
     private String lastName;

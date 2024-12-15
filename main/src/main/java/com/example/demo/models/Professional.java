@@ -13,9 +13,6 @@ public class Professional {
     private int professionalId;
 
 
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private int user_id;
-
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -30,7 +27,7 @@ public class Professional {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private ProfessionalStatus status;
+    private ProfessionalStatus status = ProfessionalStatus.ACTIVE;
 
     @Column(name = "city", nullable = false)
     private int cityId;
@@ -38,13 +35,15 @@ public class Professional {
     @Column(name = "profile_picture")
     private String profilePicture;
 
+    @JoinColumn(name = "user", referencedColumnName = "user_id", nullable = false)
+    private int user;
 
-    public int getUser_id() {
-        return user_id;
+    public int getUser() {
+        return user;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser(int user) {
+        this.user = user;
     }
 
     public String getFirstName() {
@@ -112,10 +111,10 @@ public class Professional {
     }
 
     public int getUserId() {
-        return user_id;
+        return user;
     }
 
     public void setUserId(int user_id) {
-        this.user_id = user_id;
+        this.user = user_id;
     }
 }

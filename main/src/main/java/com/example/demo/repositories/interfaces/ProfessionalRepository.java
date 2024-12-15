@@ -14,6 +14,6 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Inte
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Professional p WHERE p.user_id = :userId")
-    void deleteByUserId(@Param("userId") int userId);
+    @Query("DELETE FROM Professional p WHERE p.user = :user")
+    void deleteByUserId(@Param("user") int userId);
 }
