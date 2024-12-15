@@ -17,7 +17,7 @@ public class Ad {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "company", referencedColumnName = "company_id", nullable = false)
     private Company company;
 
     @Column(name = "title", length = 50, nullable = false)
@@ -53,7 +53,7 @@ public class Ad {
     @ManyToMany
     @JoinTable(
             name = "job_adds", // Join table name
-            joinColumns = @JoinColumn(name = "id"), // FK to Ad
+            joinColumns = @JoinColumn(name = "ad_id"), // FK to Ad
             inverseJoinColumns = @JoinColumn(name = "skillset") // FK to Skill
     )
     private Set<Skill> skills = new HashSet<>();
