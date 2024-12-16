@@ -21,14 +21,9 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public SkillDTO getSkillById(int id) {
-        Skill skill = skillRepository.findById(id)
+        Skill skill = skillRepository.findSkillById(id)
                 .orElseThrow(() -> new RuntimeException("Skill not found with ID: " + id));
         return convertToDTO(skill);
-    }
-
-    @Override
-    public Skill getSkillByName(String name) {
-        return skillRepository.findByName(name);
     }
 
     @Override
@@ -52,6 +47,11 @@ public class SkillServiceImpl implements SkillService {
         Skill updatedSkill = skillRepository.save(existingSkill);
 
         return convertToDTO(updatedSkill);
+    }
+
+    @Override
+    public Skill findSkillById(int id) {
+        return skillRepository.findSkillById(id).orElseThrow(() -> new RuntimeException("Skill not found with ID: " + id));
     }
 
     @Override

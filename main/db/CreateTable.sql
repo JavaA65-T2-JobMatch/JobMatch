@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
 
 -- Dumping structure for table jobmatch.job_adds
 CREATE TABLE IF NOT EXISTS `job_adds` (
-  `ad_id` int(11) NOT NULL,
+  `ad_id` int(11) NOT NULL AUTO_INCREMENT,
   `company` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
   `salary_min` decimal(10,2) DEFAULT 0,

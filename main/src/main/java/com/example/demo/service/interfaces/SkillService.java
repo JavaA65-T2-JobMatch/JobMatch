@@ -8,11 +8,12 @@ import java.util.List;
 public interface SkillService {
 
     SkillDTO getSkillById(int id);
-    Skill getSkillByName(String name);
 
     SkillDTO createSkill(SkillDTO skillDTO);
 
     SkillDTO updateSkill(int id, SkillDTO skillDTO);
+
+    Skill findSkillById(int id);
 
     boolean deleteSkill(int id);
 

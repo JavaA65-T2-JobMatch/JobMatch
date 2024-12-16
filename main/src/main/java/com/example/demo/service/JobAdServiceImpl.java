@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.dTOs.JobAdDTO;
 import com.example.demo.enums.JobAdStatus;
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.helpers.AdMapper;
 import com.example.demo.models.Ad;
 import com.example.demo.repositories.interfaces.JobAdRepository;
 import com.example.demo.service.interfaces.JobAdService;

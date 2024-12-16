@@ -45,18 +45,20 @@ public class Ad {
     @Column(name = "status")
     private JobAdStatus status = JobAdStatus.ACTIVE;
 
+    @Column(name="requirements", nullable = false, length = 100)
+    private String requirements;
+
+
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @ManyToMany
-    @JoinTable(
-            name = "job_adds", // Join table name
-            joinColumns = @JoinColumn(name = "ad_id"), // FK to Ad
-            inverseJoinColumns = @JoinColumn(name = "skillset") // FK to Skill
-    )
+    //ToDo Make it ManyToMany table
+    @OneToMany
+    @JoinColumn(name = "skill_id")
     private Set<Skill> skills = new HashSet<>();
 
     @OneToMany(mappedBy = "jobAd", fetch = FetchType.LAZY)
@@ -163,7 +165,13 @@ public class Ad {
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
+    public String getRequirements() {
+        return requirements;
+    }
 
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
     public List<Match> getMatches() {
         return matches;
     }

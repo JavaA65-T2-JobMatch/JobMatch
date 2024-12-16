@@ -1,33 +1,40 @@
 package com.example.demo.dTOs;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 public class JobAdDTO {
 
     private String title;
     private double salaryMin;
     private double salaryMax;
     private String description;
+    private String requirements;
     private String status;
     private int companyId;
     private int locationId;
-    private String requirements;
+    private String skills;
 
 
     public JobAdDTO() {}
 
-    public JobAdDTO( String title, double salaryMin, double salaryMax, String description,
-                    String status, int companyId, int locationId, String requirements
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
+
+    public JobAdDTO(String title, double salaryMin, double salaryMax, String description,
+                    String requirements, String status, int companyId, int locationId, String skills
                     ) {
         this.title = title;
         this.salaryMin = salaryMin;
         this.salaryMax = salaryMax;
         this.description = description;
+        this.requirements = requirements;
         this.status = status;
         this.companyId = companyId;
         this.locationId = locationId;
-        this.requirements = requirements;
+        this.skills = skills;
 
     }
 
@@ -90,12 +97,12 @@ public class JobAdDTO {
         this.locationId = locationId;
     }
 
-    public String getRequirements() {
-        return requirements;
+    public String getSkills() {
+        return skills;
     }
 
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
+    public void setSkills(String skills) {
+        this.skills = skills;
     }
 
   }
