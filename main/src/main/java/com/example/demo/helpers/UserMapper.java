@@ -1,7 +1,6 @@
 package com.example.demo.helpers;
 
 import com.example.demo.dTOs.UserDTO;
-import com.example.demo.dTOs.UserRegistrationDTO;
 import com.example.demo.enums.UserRole;
 import com.example.demo.models.UserEntity;
 import org.springframework.stereotype.Component;

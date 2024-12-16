@@ -35,7 +35,8 @@ public class Professional {
     @Column(name = "profile_picture")
     private String profilePicture;
 
-    @JoinColumn(name = "user", referencedColumnName = "user_id", nullable = false)
+    @Column(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private int user;
 
     public int getUser() {

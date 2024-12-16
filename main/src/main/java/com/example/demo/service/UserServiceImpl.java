@@ -14,8 +14,6 @@ import com.example.demo.service.interfaces.UserService;
 import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.interfaces.UserRepository;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
 
@@ -41,7 +38,6 @@ public class UserServiceImpl implements UserService {
     private final CityRepository cityRepository;
     PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final JwtConfig jwtConfig;
 
     @Autowired
@@ -87,7 +83,7 @@ public class UserServiceImpl implements UserService {
             professionalRepository.deleteByUserId(userId);
         }
         else if (user.getRole() == UserRole.COMPANY) {
-            companyRepository.deleteById(userId);
+            companyRepository.deleteByUserId(userId);
         }
 
         userRepository.delete(user);

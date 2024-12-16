@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${title}">Default Title</title>
     <link rel="stylesheet" href="/static/style.css" th:href="@{/static/style.css}">
@@ -9,6 +9,13 @@
     <h1 th:text="${title}" class="main-title">Welcome</h1>
 </header>
 
+<nav class="navigation">
+    <button id="loginButton" onclick="navigateToLogin()">Login</button>
+    <button id="registerButton" onclick="navigateToRegister()">Register</button>
+    <button id="logoutButton" onclick="logout()" style="display: none;">Logout</button>
+    <button id="profileButton" onclick="navigateToProfile()" style="display: none;">Profile</button>
+</nav>
+
 <div class="container">
     <p th:text="${message}" class="main-message">Default message</p>
 </div>
@@ -16,5 +23,43 @@
 <footer>
     <p>&copy; 2024 Your Company. All rights reserved.</p>
 </footer>
+
+<script>
+    function checkAuth() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            document.getElementById('loginButton').style.display = 'none';
+            document.getElementById('registerButton').style.display = 'none';
+            document.getElementById('logoutButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'block';
+        } else {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('registerButton').style.display = 'block';
+            document.getElementById('logoutButton').style.display = 'none';
+            document.getElementById('profileButton').style.display = 'none';
+        }
+    }
+
+    function navigateToLogin() {
+        window.location.href = "/user/login";
+    }
+
+    function navigateToRegister() {
+        window.location.href = "/user/register";
+    }
+
+    function navigateToProfile() {
+        window.location.href = "/user/profile";
+    }
+
+    function logout() {
+        localStorage.removeItem('token');
+        alert('Logged out successfully!');
+        checkAuth();
+        window.location.href = "/";
+    }
+
+    checkAuth();
+</script>
 </body>
 </html>

@@ -8,14 +8,15 @@ public class Company{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="companyId")
     private int companyId;
 
     @Column(name = "company_name", nullable = false)
     private String companyName;
 
-    @JoinColumn(name = "user",referencedColumnName = "user_id",nullable = false)
-    private int user;
+    @Column(name = "user_id")
+    @JoinColumn(name = "user_id",referencedColumnName = "user_id",nullable = false)
+    private int userId;
 
     @Column(name = "description")
     private String description;
@@ -78,10 +79,10 @@ public class Company{
     }
 
     public int getUser() {
-        return user;
+        return userId;
     }
 
     public void setUser(int user) {
-        this.user = user;
+        this.userId = user;
     }
 }

@@ -15,6 +15,6 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Company p WHERE p.user = :userId")
+    @Query("DELETE FROM Company p WHERE p.userId = :userId")
     void deleteByUserId(@Param("userId") int userId);
 }

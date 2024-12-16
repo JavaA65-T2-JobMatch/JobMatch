@@ -1,9 +1,6 @@
 package com.example.demo.controllers.REST;
 
-import com.example.demo.dTOs.ChangePasswordDTO;
-import com.example.demo.dTOs.UserDTO;
-import com.example.demo.dTOs.UserLoginDTO;
-import com.example.demo.dTOs.UserRegistrationDTO;
+import com.example.demo.dTOs.*;
 import com.example.demo.helpers.UserMapper;
 import com.example.demo.models.UserEntity;
 import com.example.demo.service.interfaces.UserService;
@@ -118,10 +115,10 @@ public class UserRestController {
                             loginDTO.getPassword()
                     )
             );
-
             String token = userService.generateToken(loginDTO.getUsername());
 
-            return ResponseEntity.ok().body(Map.of("token",token));
+
+            return ResponseEntity.ok(new TokenResponseDTO(token));
         }catch (AuthenticationException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
