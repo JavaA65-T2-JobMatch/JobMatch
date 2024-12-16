@@ -1,5 +1,6 @@
 package com.example.demo.service.interfaces;
 
+import com.example.demo.dTOs.JobAdDTO;
 import com.example.demo.models.Ad;
 
 import java.util.List;

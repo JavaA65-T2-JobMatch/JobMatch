@@ -9,9 +9,10 @@ public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="skill_id")
     private int id;
 
-    @Column(name = "name", length = 255, nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "created_by", length = 30)

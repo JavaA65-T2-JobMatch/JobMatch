@@ -75,9 +75,10 @@ public class JobAdRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Ad> saveJobAd(@RequestBody JobAdDTO jobAd) {
-        Ad createdJobAd = adMapper.fromDto(jobAd);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdJobAd);
+    public ResponseEntity<Ad> saveJobAd(@RequestBody JobAdDTO jobAdDTO) {
+        Ad createdJobAd = adMapper.fromDto(jobAdDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobAdService.saveJobAd(createdJobAd));
     }
 
     @DeleteMapping("/{id}")

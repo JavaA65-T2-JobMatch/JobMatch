@@ -1,12 +1,12 @@
 package com.example.demo.helpers;
 
 import com.example.demo.dTOs.JobAdDTO;
+import com.example.demo.dTOs.SkillDTO;
 import com.example.demo.enums.JobAdStatus;
 import com.example.demo.models.Ad;
 import com.example.demo.models.Skill;
 import com.example.demo.service.interfaces.CityService;
 import com.example.demo.service.interfaces.CompanyService;
-import com.example.demo.service.interfaces.JobAdService;
 import com.example.demo.service.interfaces.SkillService;
 import org.springframework.stereotype.Component;
 
@@ -15,20 +15,25 @@ import java.util.Set;
 
 @Component
 public class AdMapper {
-        private final JobAdService jobAdService;
         private final CompanyService companyService;
         private final CityService cityService;
         private final SkillService skillService;
+        private final SkillMapper skillMapper;
 
-    public AdMapper(JobAdService jobAdService, CompanyService companyService, CityService cityService, SkillService skillService) {
-        this.jobAdService = jobAdService;
+    public AdMapper(CompanyService companyService, CityService cityService, SkillService skillService, SkillMapper skillMapper) {
         this.companyService = companyService;
         this.cityService = cityService;
         this.skillService = skillService;
+        this.skillMapper = skillMapper;
     }
 
     public Ad fromDto(JobAdDTO jobAdDTO){
         Ad ad = new Ad();
+        assignFromDto(jobAdDTO, ad);
+        return ad;
+    }
+
+    public void assignFromDto(JobAdDTO jobAdDTO, Ad ad){
         ad.setTitle(jobAdDTO.getTitle());
         ad.setSalaryMin(jobAdDTO.getSalaryMin());
         ad.setSalaryMax(jobAdDTO.getSalaryMax());
@@ -36,8 +41,8 @@ public class AdMapper {
         ad.setStatus(JobAdStatus.valueOf(jobAdDTO.getStatus()));
         ad.setCompany(companyService.getCompanyById(jobAdDTO.getCompanyId()));
         ad.setLocation(cityService.findCityById(jobAdDTO.getLocationId()));
-        ad.setSkills(skillsToSet(jobAdDTO.getRequirements()));
-        return ad;
+        ad.setRequirements(jobAdDTO.getRequirements());
+        ad.setSkills(skillsToSet(jobAdDTO.getSkills()));
     }
 
     private Set<Skill> skillsToSet(String skills){
@@ -45,7 +50,8 @@ public class AdMapper {
 
         Set<Skill> convertedSkills = new HashSet<>();
         for(String skill : skillArray){
-            convertedSkills.add(skillService.getSkillByName(skill));
+            Skill extractedSkill = skillService.findSkillById(Integer.parseInt(skill));
+            convertedSkills.add(extractedSkill);
         }
 
         return convertedSkills;
