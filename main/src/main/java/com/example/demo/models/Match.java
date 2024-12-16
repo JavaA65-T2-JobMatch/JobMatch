@@ -11,6 +11,7 @@ import java.util.List;
 public class Match {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(name="match_id")
     private int id;
 
     @ManyToOne
