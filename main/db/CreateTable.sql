@@ -58,18 +58,15 @@ CREATE TABLE IF NOT EXISTS `job_adds` (
   `salary_threshold` int(11) DEFAULT 0,
   `description` varchar(255) DEFAULT NULL,
   `location` int(11) NOT NULL,
-  `status` enum('Active','Archived') DEFAULT NULL,
+  `status` enum('ACTIVE','ARCHIVED') DEFAULT NULL,
   `requirements` varchar(100) NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `skillset` int(11) NOT NULL,
   PRIMARY KEY (`ad_id`),
   UNIQUE KEY `job_adds_pk_2` (`ad_id`),
   KEY `company_id` (`company`),
   KEY `location_id` (`location`),
-  KEY `job_adds_skills_id_fk` (`skillset`),
   CONSTRAINT `company_id` FOREIGN KEY (`company`) REFERENCES `companies` (`company_id`),
-  CONSTRAINT `job_adds_skills_id_fk` FOREIGN KEY (`skillset`) REFERENCES `skills` (`skill_id`) ON DELETE CASCADE,
   CONSTRAINT `location_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
