@@ -37,7 +37,7 @@ public class AdMapper {
         ad.setCompany(companyService.getCompanyById(jobAdDTO.getCompanyId()));
         ad.setLocation(cityService.findCityById(jobAdDTO.getLocationId()));
         ad.setSkills(skillsToSet(jobAdDTO.getRequirements()));
-        return jobAdService.saveJobAd(ad);
+        return ad;
     }
 
     private Set<Skill> skillsToSet(String skills){

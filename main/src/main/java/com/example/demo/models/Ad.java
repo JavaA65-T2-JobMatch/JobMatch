@@ -14,6 +14,7 @@ public class Ad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ad_id")
     private int id;
 
     @ManyToOne
