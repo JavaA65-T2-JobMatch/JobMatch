@@ -57,8 +57,10 @@ public class Ad {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     //ToDo Make it ManyToMany table
-    @OneToMany
-    @JoinColumn(name = "skill_id")
+    @ManyToMany
+    @JoinTable(name="ads_skills",
+                joinColumns = @JoinColumn(name="ad_id"),
+                inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private Set<Skill> skills = new HashSet<>();
 
     @OneToMany(mappedBy = "jobAd", fetch = FetchType.LAZY)

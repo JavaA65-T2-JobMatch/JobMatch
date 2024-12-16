@@ -18,13 +18,11 @@ public class AdMapper {
         private final CompanyService companyService;
         private final CityService cityService;
         private final SkillService skillService;
-        private final SkillMapper skillMapper;
 
-    public AdMapper(CompanyService companyService, CityService cityService, SkillService skillService, SkillMapper skillMapper) {
+    public AdMapper(CompanyService companyService, CityService cityService, SkillService skillService) {
         this.companyService = companyService;
         this.cityService = cityService;
         this.skillService = skillService;
-        this.skillMapper = skillMapper;
     }
 
     public Ad fromDto(JobAdDTO jobAdDTO){
