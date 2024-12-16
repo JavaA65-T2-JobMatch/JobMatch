@@ -56,7 +56,6 @@ public class Ad {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    //ToDo Make it ManyToMany table
     @ManyToMany
     @JoinTable(name="ads_skills",
                 joinColumns = @JoinColumn(name="ad_id"),

@@ -40,18 +40,18 @@ public class AdMapper {
         ad.setCompany(companyService.getCompanyById(jobAdDTO.getCompanyId()));
         ad.setLocation(cityService.findCityById(jobAdDTO.getLocationId()));
         ad.setRequirements(jobAdDTO.getRequirements());
-        ad.setSkills(skillsToSet(jobAdDTO.getSkills()));
+        assignSkills(jobAdDTO.getSkills(), ad);
     }
 
-    private Set<Skill> skillsToSet(String skills){
+    private void assignSkills(String skills, Ad ad){
         String[] skillArray = skills.split(",");
 
-        Set<Skill> convertedSkills = new HashSet<>();
+
         for(String skill : skillArray){
             Skill extractedSkill = skillService.findSkillById(Integer.parseInt(skill));
-            convertedSkills.add(extractedSkill);
+            ad.getSkills().add(extractedSkill);
         }
 
-        return convertedSkills;
+
     }
 }
