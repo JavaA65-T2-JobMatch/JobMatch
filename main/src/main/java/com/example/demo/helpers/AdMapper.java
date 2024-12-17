@@ -35,6 +35,7 @@ public class AdMapper {
         ad.setTitle(jobAdDTO.getTitle());
         ad.setSalaryMin(jobAdDTO.getSalaryMin());
         ad.setSalaryMax(jobAdDTO.getSalaryMax());
+        ad.setSalaryThreshold(jobAdDTO.getSalaryThreshold());
         ad.setDescription(jobAdDTO.getDescription());
         ad.setStatus(JobAdStatus.valueOf(jobAdDTO.getStatus()));
         ad.setCompany(companyService.getCompanyById(jobAdDTO.getCompanyId()));

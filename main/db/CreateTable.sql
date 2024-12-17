@@ -105,6 +105,16 @@ CREATE TABLE IF NOT EXISTS `job_application` (
   CONSTRAINT `job_application_cities_city_id` FOREIGN KEY (`location`) REFERENCES `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+CREATE TABLE IF NOT EXISTS `applications_skills`(
+    applications_skills_id int NOT NULL AUTO_INCREMENT,
+    application_id int NOT NULL ,
+    skill_id int NOT NULL ,
+    PRIMARY KEY (applications_skills_id),
+    UNIQUE KEY `application_skills_id_fk` (`applications_skills_id`),
+    CONSTRAINT `applications_skills_application_id_fk` FOREIGN KEY (`application_id`) REFERENCES `job_application` (application_id) ON DELETE CASCADE ,
+    CONSTRAINT `application_skills_skill_id_fk` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`skill_id`) ON DELETE CASCADE
+ );
+
 -- Dumping data for table jobmatch.job_application: ~0 rows (approximately)
 
 -- Dumping structure for table jobmatch.matches
