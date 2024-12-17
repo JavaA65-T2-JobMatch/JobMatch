@@ -26,12 +26,11 @@ public class JobAdMvcController {
         this.matchService = matchService;
     }
 
-    // Display all job ads
-    @GetMapping("/ad-list")
-    public String getAllJobAds(Model model) {
+    @GetMapping
+    public String listJobAds(Model model) {
         List<Ad> jobAds = jobAdService.getAllJobAds();
         model.addAttribute("jobAds", jobAds);
-        return "adCommands/ad-list"; // Renders ad-list.html
+        return "adCommands/ad-list"; // Return job ad list page
     }
 
     // Display job ads by company ID
@@ -39,7 +38,7 @@ public class JobAdMvcController {
     public String getJobAdsByCompanyId(@PathVariable int companyId, Model model) {
         List<Ad> jobAds = jobAdService.getJobAdsByCompanyId(companyId);
         model.addAttribute("jobAds", jobAds);
-        return "adCommands/ad-list"; // Renders ad-list.html
+        return "/adCommands/ad-list"; // Renders ad-list.html
     }
 
     // Display active job ads
@@ -63,7 +62,7 @@ public class JobAdMvcController {
     @GetMapping("/create-ad")
     public String showCreateForm(Model model) {
         model.addAttribute("jobAd", new Ad());
-        return "adCommands/create-ad"; // Renders create-ad.html
+        return "/adCommands/create-ad"; // Renders create-ad.html
     }
 
     // Save a new job ad
@@ -71,13 +70,12 @@ public class JobAdMvcController {
     public String saveJobAd(@ModelAttribute Ad jobAd, Model model) {
         try {
             jobAdService.saveJobAd(jobAd);
-            return "redirect:/job-ads/ad-list"; // Redirect to the job ads list after successful creation
+            return "redirect:/job-ads"; // Redirects to the list of job ads
         } catch (Exception e) {
             model.addAttribute("error", "Error saving job ad: " + e.getMessage());
-            return "adCommands/create-ad"; // Return to the form with an error if something goes wrong
+            return "adCommands/create-ad"; // Return to the form with an error
         }
     }
-
 
     // Match a job ad with an application
     @GetMapping("/{adId}/match/{appId}")
