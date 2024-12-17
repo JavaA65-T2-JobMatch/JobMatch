@@ -8,7 +8,6 @@ public class JobAdDTO {
     private double salaryThreshold;
     private String description;
     private String requirements;
-    private String status;
     private int companyId;
     private int locationId;
     private String skills;
@@ -16,18 +15,11 @@ public class JobAdDTO {
 
     public JobAdDTO() {}
 
-    public String getRequirements() {
-        return requirements;
-    }
-
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
 
 
 
     public JobAdDTO(String title, double salaryMin, double salaryMax, double salaryThreshold, String description,
-                    String requirements, String status, int companyId, int locationId, String skills
+                    String requirements, int companyId, int locationId, String skills
                     ) {
         this.title = title;
         this.salaryMin = salaryMin;
@@ -35,7 +27,6 @@ public class JobAdDTO {
         this.salaryThreshold = salaryThreshold;
         this.description = description;
         this.requirements = requirements;
-        this.status = status;
         this.companyId = companyId;
         this.locationId = locationId;
         this.skills = skills;
@@ -77,14 +68,6 @@ public class JobAdDTO {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public int getCompanyId() {
         return companyId;
     }
@@ -114,6 +97,13 @@ public class JobAdDTO {
 
     public void setSalaryThreshold(double salaryThreshold) {
         this.salaryThreshold = salaryThreshold;
+    }
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
     }
 
   }

@@ -1,6 +1,8 @@
 package com.example.demo.controllers.REST;
 
+import com.example.demo.dTOs.JobApplicationDTO;
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.helpers.JobApplicationMapper;
 import com.example.demo.models.Ad;
 import com.example.demo.models.Application;
 import com.example.demo.models.Match;
@@ -21,11 +23,13 @@ public class ApplicationRestController {
     private final ApplicationService applicationService;
     private final JobAdService jobAdService;
     private final MatchService matchService;
+    private final JobApplicationMapper jobApplicationMapper;
 
-    public ApplicationRestController(ApplicationService applicationService, JobAdService jobAdService, MatchService matchService) {
+    public ApplicationRestController(ApplicationService applicationService, JobAdService jobAdService, MatchService matchService, JobApplicationMapper jobApplicationMapper) {
         this.applicationService = applicationService;
         this.jobAdService = jobAdService;
         this.matchService = matchService;
+        this.jobApplicationMapper = jobApplicationMapper;
     }
 
     @GetMapping
@@ -47,9 +51,9 @@ public class ApplicationRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Application> createApplication(@RequestBody Application application) {
-        Application createdApplication = applicationService.saveApplication(application);
-        return ResponseEntity.ok(createdApplication);
+    public ResponseEntity<Application> createApplication(@RequestBody JobApplicationDTO jobApplicationDTO) {
+        Application createdApplication = jobApplicationMapper.fromDto(jobApplicationDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(applicationService.saveApplication(createdApplication));
     }
 
     @PutMapping("/{id}")

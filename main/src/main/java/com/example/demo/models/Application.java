@@ -36,7 +36,7 @@ public class Application {
     private City location;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private ApplicationStatus status = ApplicationStatus.ACTIVE;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -46,10 +46,9 @@ public class Application {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @ManyToMany
-    @JoinTable(
-            name = "applications_skills", // Join table name
-            joinColumns = @JoinColumn(name = "application_id"), // FK to Application
-            inverseJoinColumns = @JoinColumn(name = "skill_id") // FK to Skill
+    @JoinTable(name = "applications_skills",
+            joinColumns = @JoinColumn(name = "application_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
     private Set<Skill> skills = new HashSet<>();
 

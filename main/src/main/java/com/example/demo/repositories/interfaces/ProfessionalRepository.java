@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface ProfessionalRepository extends JpaRepository<Professional, Integer> {
     Optional<Professional>findByFirstName(String firstName);
 
+    Optional<Professional> findProfessionalByProfessionalId(int professionalId);
     @Modifying
     @Transactional
     @Query("DELETE FROM Professional p WHERE p.user = :user")
