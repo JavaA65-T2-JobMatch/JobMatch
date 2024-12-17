@@ -56,7 +56,12 @@ public class JobAdRestController {
         List<Ad> jobAds = jobAdService.searchJobAdsByTitle(keyword);
         return ResponseEntity.ok(jobAds);
     }
+    @PostMapping
+    public ResponseEntity<Ad> saveJobAd(@RequestBody JobAdDTO jobAdDTO) {
+        Ad createdJobAd = adMapper.fromDto(jobAdDTO);
 
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobAdService.saveJobAd(createdJobAd));
+    }
     @PostMapping("/{adId}/match/{appId}")
     public ResponseEntity<Match> matchJobAd(@PathVariable int adId, @PathVariable int appId){
         try {
@@ -74,12 +79,7 @@ public class JobAdRestController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Ad> saveJobAd(@RequestBody JobAdDTO jobAdDTO) {
-        Ad createdJobAd = adMapper.fromDto(jobAdDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(jobAdService.saveJobAd(createdJobAd));
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJobAd(@PathVariable int id) {
