@@ -1,6 +1,5 @@
 package com.example.demo.controllers.MVC;
 
-import com.example.demo.enums.JobAdStatus;
 import com.example.demo.models.Ad;
 import com.example.demo.models.Application;
 import com.example.demo.models.Match;
@@ -27,52 +26,60 @@ public class JobAdMvcController {
         this.matchService = matchService;
     }
 
-    @GetMapping
+    // Display all job ads
+    @GetMapping("/ad-list")
     public String getAllJobAds(Model model) {
         List<Ad> jobAds = jobAdService.getAllJobAds();
         model.addAttribute("jobAds", jobAds);
-        return "job-ads/list"; // Thymeleaf template
+        return "adCommands/ad-list"; // Renders ad-list.html
     }
 
+    // Display job ads by company ID
     @GetMapping("/company/{companyId}")
     public String getJobAdsByCompanyId(@PathVariable int companyId, Model model) {
         List<Ad> jobAds = jobAdService.getJobAdsByCompanyId(companyId);
         model.addAttribute("jobAds", jobAds);
-        return "job-ads/company-list"; // Thymeleaf template
+        return "adCommands/ad-list"; // Renders ad-list.html
     }
 
+    // Display active job ads
     @GetMapping("/active")
     public String getActiveJobAds(Model model) {
         List<Ad> activeJobAds = jobAdService.getActiveJobAds();
         model.addAttribute("jobAds", activeJobAds);
-        return "job-ads/active-list"; // Thymeleaf template
+        return "adCommands/ad-list"; // Renders ad-list.html
     }
 
+    // Search job ads by title
     @GetMapping("/search")
     public String searchJobAdsByTitle(@RequestParam String keyword, Model model) {
         List<Ad> jobAds = jobAdService.searchJobAdsByTitle(keyword);
         model.addAttribute("jobAds", jobAds);
         model.addAttribute("keyword", keyword);
-        return "job-ads/search-results"; // Thymeleaf template
+        return "adCommands/search-results"; // Renders search-results.html
     }
 
-    @GetMapping("/create")
+    // Show the form for creating a new job ad
+    @GetMapping("/create-ad")
     public String showCreateForm(Model model) {
         model.addAttribute("jobAd", new Ad());
-        return "job-ads/create"; // Thymeleaf template
+        return "adCommands/create-ad"; // Renders create-ad.html
     }
 
+    // Save a new job ad
     @PostMapping
     public String saveJobAd(@ModelAttribute Ad jobAd, Model model) {
         try {
             jobAdService.saveJobAd(jobAd);
-            return "redirect:/job-ads";
+            return "redirect:/job-ads/ad-list"; // Redirect to the job ads list after successful creation
         } catch (Exception e) {
             model.addAttribute("error", "Error saving job ad: " + e.getMessage());
-            return "job-ads/create";
+            return "adCommands/create-ad"; // Return to the form with an error if something goes wrong
         }
     }
 
+
+    // Match a job ad with an application
     @GetMapping("/{adId}/match/{appId}")
     public String matchJobAd(@PathVariable int adId, @PathVariable int appId, Model model) {
         try {
@@ -82,25 +89,27 @@ public class JobAdMvcController {
             matchService.tryMatching(match);
 
             model.addAttribute("match", match);
-            return "job-ads/match-success"; // Thymeleaf template
+            return "adCommands/match-success"; // Renders match-success.html
         } catch (Exception e) {
             model.addAttribute("error", "Error matching job ad: " + e.getMessage());
-            return "error";
+            return "adCommands/error-ad"; // Renders error-ad.html
         }
     }
 
+    // Show the form for editing a job ad
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
         try {
             Ad jobAd = jobAdService.getJobAdById(id);
             model.addAttribute("jobAd", jobAd);
-            return "job-ads/edit"; // Thymeleaf template
+            return "adCommands/edit-ad"; // Renders edit-ad.html
         } catch (Exception e) {
             model.addAttribute("error", "Job ad not found: " + e.getMessage());
-            return "error";
+            return "adCommands/error-ad"; // Renders error-ad.html
         }
     }
 
+    // Update an existing job ad
     @PostMapping("/edit/{id}")
     public String updateJobAd(@PathVariable int id, @ModelAttribute Ad jobAd, Model model) {
         try {
@@ -113,21 +122,22 @@ public class JobAdMvcController {
             existingJobAd.setLocation(jobAd.getLocation());
 
             jobAdService.saveJobAd(existingJobAd);
-            return "redirect:/job-ads";
+            return "redirect:/job-ads"; // Redirect to the job ads list
         } catch (Exception e) {
             model.addAttribute("error", "Error updating job ad: " + e.getMessage());
-            return "job-ads/edit";
+            return "adCommands/edit-ad"; // Return to the form with an error
         }
     }
 
+    // Delete a job ad
     @GetMapping("/delete/{id}")
     public String deleteJobAd(@PathVariable int id, Model model) {
         try {
             jobAdService.deleteJobAd(id);
-            return "redirect:/job-ads";
+            return "redirect:/job-ads"; // Redirect to the job ads list
         } catch (Exception e) {
             model.addAttribute("error", "Error deleting job ad: " + e.getMessage());
-            return "error";
+            return "adCommands/error-ad"; // Renders error-ad.html
         }
     }
 }
