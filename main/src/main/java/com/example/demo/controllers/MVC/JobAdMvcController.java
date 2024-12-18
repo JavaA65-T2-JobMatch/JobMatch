@@ -1,13 +1,16 @@
 package com.example.demo.controllers.MVC;
 
+import com.example.demo.dTOs.JobAdDTO;
 import com.example.demo.models.Ad;
 import com.example.demo.models.Application;
 import com.example.demo.models.Match;
 import com.example.demo.service.interfaces.ApplicationService;
 import com.example.demo.service.interfaces.JobAdService;
 import com.example.demo.service.interfaces.MatchService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,24 +61,23 @@ public class JobAdMvcController {
         return "adCommands/search-results"; // Renders search-results.html
     }
 
-    // Show the form for creating a new job ad
-    @GetMapping("/create-ad")
+    @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("jobAd", new Ad());
-        return "/adCommands/create-ad"; // Renders create-ad.html
+        model.addAttribute("jobAd", new JobAdDTO());
+        return "/adCommands/create-ad";
     }
 
-    // Save a new job ad
+
     @PostMapping
-    public String saveJobAd(@ModelAttribute Ad jobAd, Model model) {
-        try {
-            jobAdService.saveJobAd(jobAd);
-            return "redirect:/job-ads"; // Redirects to the list of job ads
-        } catch (Exception e) {
-            model.addAttribute("error", "Error saving job ad: " + e.getMessage());
-            return "adCommands/create-ad"; // Return to the form with an error
+    public String saveJobAd(@ModelAttribute @Valid Ad jobAd, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "adCommands/create-ad";
         }
+        jobAdService.saveJobAd(jobAd);
+        return "redirect:/job-ads";
     }
+
+
 
     // Match a job ad with an application
     @GetMapping("/{adId}/match/{appId}")
