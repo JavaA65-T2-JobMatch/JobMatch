@@ -17,6 +17,8 @@ import io.jsonwebtoken.Jwts;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -106,48 +108,50 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserRegistrationDTO registrationDTO) {
+        try {
+            UserEntity user = new UserEntity();
+            user.setUsername(registrationDTO.getUsername());
+            user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+            user.setRole(UserRole.valueOf(registrationDTO.getRole()));
+            UserEntity savedUser = userRepository.save(user);
 
-        UserEntity user = new UserEntity();
-        user.setUsername(registrationDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
-        user.setRole(UserRole.valueOf(registrationDTO.getRole()));
-        UserEntity savedUser = userRepository.save(user);
+            if ("PROFESSIONAL".equalsIgnoreCase(registrationDTO.getRole())) {
+                Professional professional = new Professional();
+                professional.setFirstName(registrationDTO.getFirstName());
+                professional.setLastName(registrationDTO.getLastName());
+                professional.setEmail(registrationDTO.getEmail());
+                professional.setShortSummary(registrationDTO.getDescription());
+                professional.setUserId(savedUser.getUserId());
 
-        if ("PROFESSIONAL".equalsIgnoreCase(registrationDTO.getRole())) {
-            Professional professional = new Professional();
-            professional.setFirstName(registrationDTO.getFirstName());
-            professional.setLastName(registrationDTO.getLastName());
-            professional.setEmail(registrationDTO.getEmail());
-            professional.setShortSummary(registrationDTO.getDescription());
-            professional.setUserId(savedUser.getUserId());
-
-            if (registrationDTO.getCityId() != null){
-                Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
-                if (city.isPresent()) {
-                    professional.setCityId(city.get().getCityId());
-                }else {
-                    throw new IllegalArgumentException("City not found");
+                if (registrationDTO.getCityId() != null) {
+                    Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
+                    if (city.isPresent()) {
+                        professional.setCityId(city.get().getCityId());
+                    } else {
+                        throw new IllegalArgumentException("City not found");
+                    }
                 }
-            }
-            professionalRepository.save(professional);
-        }else if ("COMPANY".equalsIgnoreCase(registrationDTO.getRole())) {
-            Company company = new Company();
-            company.setCompanyName(registrationDTO.getCompanyName());
-            company.setDescription(registrationDTO.getDescription());
-            company.setUser(savedUser.getUserId());
-            if (registrationDTO.getCityId() != null){
-                Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
-                if (city.isPresent()) {
-                    company.setCityId(city.get().getCityId());
-                }else {
-                    throw new IllegalArgumentException("City not found");
+                professionalRepository.save(professional);
+            } else if ("COMPANY".equalsIgnoreCase(registrationDTO.getRole())) {
+                Company company = new Company();
+                company.setCompanyName(registrationDTO.getCompanyName());
+                company.setDescription(registrationDTO.getDescription());
+                company.setUser(savedUser.getUserId());
+                if (registrationDTO.getCityId() != null) {
+                    Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
+                    if (city.isPresent()) {
+                        company.setCityId(city.get().getCityId());
+                    } else {
+                        throw new IllegalArgumentException("City not found");
+                    }
                 }
+                companyRepository.save(company);
+            } else {
+                throw new IllegalArgumentException("Invalid role");
             }
-            companyRepository.save(company);
-        }else {
-            throw new IllegalArgumentException("Invalid role");
+        } catch (DataIntegrityViolationException e){
+            throw new IllegalArgumentException("User already exists");
         }
-
     }
 
     @Override

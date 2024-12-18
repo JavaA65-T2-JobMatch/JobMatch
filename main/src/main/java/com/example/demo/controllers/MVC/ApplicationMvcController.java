@@ -91,10 +91,8 @@ public class ApplicationMvcController {
     @PostMapping("/{appId}/match/{adId}")
     public String matchJobAd(@PathVariable int appId, @PathVariable int adId, Model model) {
         try {
-            Ad jobAd = jobAdService.getJobAdById(adId);
-            Application application = applicationService.getApplicationById(appId);
 
-            Match match = matchService.createMatch(new Match(application, jobAd));
+            Match match = matchService.createMatchFromApplication(appId, adId);
             matchService.tryMatching(match);
 
             model.addAttribute("match", match);

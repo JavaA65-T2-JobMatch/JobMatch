@@ -1,13 +1,10 @@
 package com.example.demo.controllers.REST;
 
 import com.example.demo.dTOs.JobAdDTO;
-import com.example.demo.enums.JobAdStatus;
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.helpers.AdMapper;
 import com.example.demo.models.Ad;
-import com.example.demo.models.Application;
 import com.example.demo.models.Match;
-import com.example.demo.service.interfaces.ApplicationService;
 import com.example.demo.service.interfaces.JobAdService;
 import com.example.demo.service.interfaces.MatchService;
 import org.springframework.http.HttpStatus;
@@ -22,13 +19,11 @@ import java.util.List;
 public class JobAdRestController {
 
     private final JobAdService jobAdService;
-    private final ApplicationService applicationService;
     private final MatchService matchService;
     private final AdMapper adMapper;
 
-    public JobAdRestController(JobAdService jobAdService, ApplicationService applicationService, MatchService matchService, AdMapper adMapper) {
+    public JobAdRestController(JobAdService jobAdService, MatchService matchService, AdMapper adMapper) {
         this.jobAdService = jobAdService;
-        this.applicationService = applicationService;
         this.matchService = matchService;
         this.adMapper = adMapper;
     }
@@ -65,13 +60,9 @@ public class JobAdRestController {
     @PostMapping("/{adId}/match/{appId}")
     public ResponseEntity<Match> matchJobAd(@PathVariable int adId, @PathVariable int appId){
         try {
-            Ad jobAd = jobAdService.getJobAdById(adId);
-            Application application = applicationService.getApplicationById(appId);
+            Match match = matchService.createMatchFromAd(adId, appId);
 
-            Match match = matchService.createMatch(new Match(application, jobAd));
-            matchService.tryMatching(match);
-
-            return ResponseEntity.ok(match);
+            return ResponseEntity.status(HttpStatus.CREATED).body(matchService.tryMatching(match));
         } catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (IllegalArgumentException e){

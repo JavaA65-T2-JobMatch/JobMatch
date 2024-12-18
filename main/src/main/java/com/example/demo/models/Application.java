@@ -52,9 +52,6 @@ public class Application {
     )
     private Set<Skill> skills = new HashSet<>();
 
-    @OneToMany(mappedBy = "jobApplication", fetch = FetchType.EAGER)
-    private List<Match> matches = new ArrayList<>();
-
     public Application() {
     }
 
@@ -130,14 +127,6 @@ public class Application {
 
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
     }
 
     public City getLocation() {

@@ -13,6 +13,9 @@ public interface MatchService {
     List<Match> getAllSuccessfulMatches();
     List<Match> getAllRejectedMatches();
     Optional<Match> getMatchById(int matchId);
-    void tryMatching(Match match);
+    Match tryMatching(Match match);
     void deleteMatch(int id);
+
+    Match createMatchFromAd(int adId, int appId);
+    Match createMatchFromApplication(int appId, int adId);
 }

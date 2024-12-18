@@ -62,9 +62,6 @@ public class Ad {
                 inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private Set<Skill> skills = new HashSet<>();
 
-    @OneToMany(mappedBy = "jobAd", fetch = FetchType.LAZY)
-    private List<Match> matches;
-
     public Ad() {
     }
 
@@ -172,12 +169,5 @@ public class Ad {
 
     public void setRequirements(String requirements) {
         this.requirements = requirements;
-    }
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
     }
 }

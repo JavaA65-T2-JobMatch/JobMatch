@@ -80,13 +80,9 @@ public class ApplicationRestController {
     @PostMapping("/{appId}/match/{adId}")
     public ResponseEntity<Match> matchJobAd(@PathVariable int appId, @PathVariable int adId){
         try {
-            Ad jobAd = jobAdService.getJobAdById(adId);
-            Application application = applicationService.getApplicationById(appId);
+            Match match = matchService.createMatchFromApplication(appId, adId);
 
-            Match match = matchService.createMatch(new Match(application, jobAd));
-            matchService.tryMatching(match);
-
-            return ResponseEntity.ok(match);
+            return ResponseEntity.status(HttpStatus.CREATED).body(matchService.tryMatching(match));
         } catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (IllegalArgumentException e){

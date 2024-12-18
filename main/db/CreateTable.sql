@@ -120,21 +120,28 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `job_application` int(11) NOT NULL,
   `job_ad` int(11) NOT NULL,
   `city_id` int NOT NULL,
-  `skills_id` int NOT NULL ,
-  `match_status` enum('PENDING','ACCEPTED','REJECTED') DEFAULT 'PENDING',
+  `match_status` enum('PENDING','ACCEPTED','REJECTED') DEFAULT NULL,
   `match_date` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`match_id`),
   UNIQUE KEY `matches_pk_2` (`match_id`),
   KEY `matches_job_application_id_fk` (`job_application`),
   KEY `matches_job_adds_id_fk` (`job_ad`),
   KEY `matches_cities_city_id_fk` (`city_id`),
-  KEY `matches_skills_id_fk` (`skills_id`),
   CONSTRAINT `matches_job_adds_id_fk` FOREIGN KEY (`job_ad`) REFERENCES `job_adds` (`ad_id`),
   CONSTRAINT `matches_job_application_id_fk` FOREIGN KEY (`job_application`) REFERENCES `job_application` (`application_id`),
-  CONSTRAINT `matches_cities_city_id_fk` FOREIGN KEY (`city_id`) REFERENCES  `cities` (`city_id`),
-    CONSTRAINT `matches_skills_id_fk` FOREIGN KEY (`skills_id`) REFERENCES  `skills` (`skill_id`)
+  CONSTRAINT `matches_cities_city_id_fk` FOREIGN KEY (`city_id`) REFERENCES  `cities` (`city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+CREATE TABLE IF NOT EXISTS `matches_skills`
+(
+    matches_skills_id int(11) NOT NULL AUTO_INCREMENT,
+    match_id          int(11) NOT NULL,
+    skill_id          int     NOT NULL,
+    PRIMARY KEY (`matches_skills_id`),
+    UNIQUE KEY `matches_skills_id_fk` (`matches_skills_id`),
+    CONSTRAINT `matches_skills_matches_match_id_fk` FOREIGN KEY (`match_id`) REFERENCES `matches` (`match_id`) ON DELETE CASCADE,
+    CONSTRAINT `matches_skills_skills_skill_id` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`skill_id`) ON DELETE CASCADE
+);
 -- Dumping data for table jobmatch.matches: ~0 rows (approximately)
 
 -- Dumping structure for table jobmatch.professionals

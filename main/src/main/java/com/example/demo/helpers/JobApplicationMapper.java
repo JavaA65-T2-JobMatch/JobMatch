@@ -41,13 +41,9 @@ public class JobApplicationMapper {
 
     private void assignSkills(String skills, Application application){
         String[] skillArray = skills.split(",");
-
-
         for(String skill : skillArray){
             Skill extractedSkill = skillService.findSkillById(Integer.parseInt(skill));
             application.getSkills().add(extractedSkill);
         }
-
-
     }
 }
