@@ -1,30 +1,40 @@
 <!DOCTYPE html>
-<html lang = "en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skill List</title>
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Skill List</h1>
-<table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="skill : ${skills}">
-    <td th:text="${skill.id}"></td>
-    <td th:text="${skill.name}"></td>
-    <td>
-      <a th:href="@{/skills/{id}(id=${skill.id})}">View</a>
-      <a th:href="@{/skills/edit/{id}(id=${skill.id})}">Edit</a>
-      <a th:href="@{/skills/delete/{id}(id=${skill.id})}" onclick="return confirm('Are you sure?')">Delete</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<a href="/skills/create">Create New Skill</a>
+<div class="container mt-5">
+  <h1>Skill List</h1>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="skill : ${skills}">
+      <td th:text="${skill.id}"></td>
+      <td th:text="${skill.name}"></td>
+      <td>
+        <a th:href="@{/skills/{id}(id=${skill.id})}" class="btn btn-info btn-sm">View</a>
+        <a th:href="@{/skills/edit/{id}(id=${skill.id})}" class="btn btn-warning btn-sm">Edit</a>
+        <a th:href="@{/skills/delete/{id}(id=${skill.id})}" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a href="/skills/create" class="btn btn-primary">Create New Skill</a>
+</div>
+
+<!-- Bootstrap JS and dependencies (Optional but recommended for interactive components) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
