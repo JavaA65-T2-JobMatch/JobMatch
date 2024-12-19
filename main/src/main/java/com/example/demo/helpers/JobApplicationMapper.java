@@ -27,6 +27,12 @@ public class JobApplicationMapper {
         return application;
     }
 
+    public Application fromWebInput(JobApplicationDTO jobApplicationDTO){
+        Application application = new Application();
+        assignFromWebInput(jobApplicationDTO, application);
+        return application;
+    }
+
     private void assignFromDto(JobApplicationDTO jobApplicationDTO, Application application) {
         application.setProfessional(professionalService.findProfessionalById(jobApplicationDTO.getProfessionalId()));
         application.setDesiredSalaryMin(jobApplicationDTO.getDesiredSalaryMin());
@@ -34,12 +40,30 @@ public class JobApplicationMapper {
         application.setMotivation(jobApplicationDTO.getMotivation());
         application.setStatus(ApplicationStatus.ACTIVE);
         application.setLocation(cityService.findCityById(jobApplicationDTO.getLocation()));
-        assignSkills(jobApplicationDTO.getSkills(), application);
+        assignSkillsWithId(jobApplicationDTO.getSkills(), application);
+    }
+
+    private void assignFromWebInput(JobApplicationDTO jobApplicationDTO, Application application) {
+        application.setProfessional(professionalService.findProfessionalById(jobApplicationDTO.getProfessionalId()));
+        application.setDesiredSalaryMin(jobApplicationDTO.getDesiredSalaryMin());
+        application.setDesiredSalaryMax(jobApplicationDTO.getDesiredSalaryMax());
+        application.setMotivation(jobApplicationDTO.getMotivation());
+        application.setStatus(ApplicationStatus.ACTIVE);
+        application.setLocation(cityService.findCityById(jobApplicationDTO.getLocation()));
+        assignSkillsWithName(jobApplicationDTO.getSkills(), application);
 
     }
 
+    private void assignSkillsWithName(String skills, Application application) {
+        String[] skillArray = skills.split(",");
+        for(String skill : skillArray){
+            Skill extractedSkill = skillService.findSkillByName(skill);
+            application.getSkills().add(extractedSkill);
+        }
+    }
 
-    private void assignSkills(String skills, Application application){
+
+    private void assignSkillsWithId(String skills, Application application){
         String[] skillArray = skills.split(",");
         for(String skill : skillArray){
             Skill extractedSkill = skillService.findSkillById(Integer.parseInt(skill));

@@ -29,7 +29,7 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public SkillDTO createSkill(SkillDTO skillDTO) {
 
-        Optional<Skill> existingSkill = Optional.ofNullable(skillRepository.findByName(skillDTO.getName()));
+        Optional<Skill> existingSkill = skillRepository.findSkillByName(skillDTO.getName());
         if (existingSkill.isPresent()) {
             throw new RuntimeException("Skill already exists with name: " + skillDTO.getName());
         }
@@ -52,6 +52,11 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public Skill findSkillById(int id) {
         return skillRepository.findSkillById(id).orElseThrow(() -> new RuntimeException("Skill not found with ID: " + id));
+    }
+
+    @Override
+    public Skill findSkillByName(String name) {
+        return skillRepository.findSkillByName(name).orElseThrow(() -> new RuntimeException("Skill not found with name: " + name));
     }
 
     @Override

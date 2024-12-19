@@ -15,6 +15,8 @@ public interface SkillService {
 
     Skill findSkillById(int id);
 
+    Skill findSkillByName(String name);
+
     boolean deleteSkill(int id);
 
     List<SkillDTO> getAllSkills();

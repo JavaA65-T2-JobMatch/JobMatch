@@ -20,12 +20,10 @@ import java.util.List;
 public class JobAdMvcController {
 
     private final JobAdService jobAdService;
-    private final ApplicationService applicationService;
     private final MatchService matchService;
 
-    public JobAdMvcController(JobAdService jobAdService, ApplicationService applicationService, MatchService matchService) {
+    public JobAdMvcController(JobAdService jobAdService, MatchService matchService) {
         this.jobAdService = jobAdService;
-        this.applicationService = applicationService;
         this.matchService = matchService;
     }
 
