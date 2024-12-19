@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job Advertisement</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Create Job Advertisement</h1>
+    <form th:action="@{/job-ads}" th:object="${jobAd}" method="post" class="mt-4">
+        <!-- Title -->
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" th:field="*{title}" class="form-control" required>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" th:field="*{description}" class="form-control" rows="4" required></textarea>
+        </div>
+
+        <!-- Requirements -->
+        <div class="mb-3">
+            <label for="requirements" class="form-label">Requirements</label>
+            <textarea id="requirements" th:field="*{requirements}" class="form-control" rows="4"></textarea>
+        </div>
+
+        <!-- Min Salary -->
+        <div class="mb-3">
+            <label for="salaryMin" class="form-label">Min Salary</label>
+            <input type="number" id="salaryMin" th:field="*{salaryMin}" class="form-control" required>
+        </div>
+
+        <!-- Max Salary -->
+        <div class="mb-3">
+            <label for="salaryMax" class="form-label">Max Salary</label>
+            <input type="number" id="salaryMax" th:field="*{salaryMax}" class="form-control" required>
+        </div>
+
+        <!-- Salary Threshold -->
+        <div class="mb-3">
+            <label for="salaryThreshold" class="form-label">Salary Threshold</label>
+            <input type="number" id="salaryThreshold" th:field="*{salaryThreshold}" class="form-control">
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+            <label for="locationId" class="form-label">Location</label>
+            <input type="text" id="locationId" th:field="*{locationId}" class="form-control" required>
+        </div>
+
+        <!-- Skills -->
+        <div class="mb-3">
+            <label for="skills" class="form-label">Skills</label>
+            <input type="text" id="skills" th:field="*{skills}" class="form-control">
+        </div>
+
+        <!-- Company ID -->
+        <div class="mb-3">
+            <label for="companyId" class="form-label">Company ID</label>
+            <input type="number" id="companyId" th:field="*{company}" class="form-control" required>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Create Job Ad</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

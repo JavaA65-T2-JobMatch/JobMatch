@@ -24,7 +24,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
 
     @Override
     public Professional updateProfessional(int professionalId, Professional upradetProfessional, UserEntity authenticatedUser) {
-        Professional professional = professionalRepository.findById(professionalId)
+        Professional professional = professionalRepository.findProfessionalByProfessionalId(professionalId)
                 .orElseThrow(() -> new EntityNotFoundException("Professional not found"));
 
         if (!Objects.equals(professional.getUserId(), authenticatedUser.getUserId())) {
@@ -53,11 +53,17 @@ public class ProfessionalServiceImpl implements ProfessionalService {
 
     @Override
     public Optional<Professional> getProfessionalById(int professionalId) {
-        return professionalRepository.findById(professionalId);
+        return professionalRepository.findProfessionalByProfessionalId(professionalId);
     }
 
     @Override
     public List<Professional> getAllProfessionals() {
         return professionalRepository.findAll();
+    }
+
+    @Override
+    public Professional findProfessionalById(int professionalId) {
+        return professionalRepository.findProfessionalByProfessionalId(professionalId)
+                .orElseThrow( () -> new RuntimeException("Professional not found with Id: " + professionalId));
     }
 }

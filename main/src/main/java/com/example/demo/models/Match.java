@@ -4,7 +4,9 @@ import com.example.demo.enums.MatchStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="matches")
@@ -24,11 +26,13 @@ public class Match {
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
-    private City city_id;
+    private City city;
 
-    @OneToMany
-    @JoinColumn(name = "skill_id")
-    private List<Skill> skill;
+    @ManyToMany
+    @JoinTable(name = "matches_skills",
+                joinColumns = @JoinColumn(name="match_id"),
+                inverseJoinColumns = @JoinColumn(name="skill_id"))
+    private Set<Skill> skill = new HashSet<>();
 
     @Column(name = "match_status", nullable = false)
     private MatchStatus status = MatchStatus.PENDING;
@@ -40,11 +44,6 @@ public class Match {
 
 
     public Match(){}
-
-    public Match(Application jobApplication, Ad jobAd){
-        this.jobApplication = jobApplication;
-        this.jobAd = jobAd;
-    }
 
 
     public int getId() {
@@ -87,19 +86,19 @@ public class Match {
         this.matchDate = matchDate;
     }
 
-    public City getCity_id() {
-        return city_id;
+    public City getCity() {
+        return city;
     }
 
-    public void setCity_id(City city_id) {
-        this.city_id = city_id;
+    public void setCity(City city) {
+        this.city = city;
     }
 
-    public List<Skill> getSkill() {
+    public Set<Skill> getSkill() {
         return skill;
     }
 
-    public void setSkill(List<Skill> skill) {
+    public void setSkill(Set<Skill> skill) {
         this.skill = skill;
     }
 }

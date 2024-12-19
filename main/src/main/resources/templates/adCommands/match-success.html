@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Match Success</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Match Created Successfully!</h1>
+    <p>Job Ad: <span th:text="${match.jobAd.title}"></span></p>
+    <p>Application ID: <span th:text="${match.application.id}"></span></p>
+    <a href="/job-ads" class="btn btn-primary">Back to Job Ads</a>
+</div>
+</body>
+</html>

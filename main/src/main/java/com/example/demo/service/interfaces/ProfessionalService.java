@@ -12,4 +12,5 @@ public interface ProfessionalService {
     void deleteProfessional(int professionalId, UserEntity authenticatedUser);
     Optional<Professional> getProfessionalById(int professionalId);
     List<Professional> getAllProfessionals();
+    Professional findProfessionalById(int professionalId);
 }

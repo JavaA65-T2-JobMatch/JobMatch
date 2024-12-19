@@ -1,42 +1,36 @@
 package com.example.demo.dTOs;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 public class JobApplicationDTO {
-    private int id;
     private int professionalId;
-    private BigDecimal desiredSalaryMin;
-    private BigDecimal desiredSalaryMax;
+    private double desiredSalaryMin;
+    private double desiredSalaryMax;
+    private int location;
     private String motivation;
-    private String status;
-    private int skillsetId;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String skills;
+
+
 
     public JobApplicationDTO() {}
 
-    public JobApplicationDTO(int id, int professionalId, BigDecimal desiredSalaryMin, BigDecimal desiredSalaryMax,
-                             String motivation, String status, int skillsetId,
-                             LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
+    public JobApplicationDTO(int professionalId, double desiredSalaryMin, double desiredSalaryMax,
+                             String motivation,int locationId, String skills) {
         this.professionalId = professionalId;
         this.desiredSalaryMin = desiredSalaryMin;
         this.desiredSalaryMax = desiredSalaryMax;
         this.motivation = motivation;
-        this.status = status;
-        this.skillsetId = skillsetId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.location = locationId;
+        this.skills = skills;
     }
 
     // Getters and Setters
-    public int getId() {
-        return id;
+
+
+    public int getLocation() {
+        return location;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLocation(int locationId) {
+        this.location = locationId;
     }
 
     public int getProfessionalId() {
@@ -47,19 +41,19 @@ public class JobApplicationDTO {
         this.professionalId = professionalId;
     }
 
-    public BigDecimal getDesiredSalaryMin() {
+    public double getDesiredSalaryMin() {
         return desiredSalaryMin;
     }
 
-    public void setDesiredSalaryMin(BigDecimal desiredSalaryMin) {
+    public void setDesiredSalaryMin(double desiredSalaryMin) {
         this.desiredSalaryMin = desiredSalaryMin;
     }
 
-    public BigDecimal getDesiredSalaryMax() {
+    public double getDesiredSalaryMax() {
         return desiredSalaryMax;
     }
 
-    public void setDesiredSalaryMax(BigDecimal desiredSalaryMax) {
+    public void setDesiredSalaryMax(double desiredSalaryMax) {
         this.desiredSalaryMax = desiredSalaryMax;
     }
 
@@ -71,35 +65,12 @@ public class JobApplicationDTO {
         this.motivation = motivation;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSkills() {
+        return skills;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSkills(String skills) {
+        this.skills = skills;
     }
 
-    public int getSkillsetId() {
-        return skillsetId;
-    }
-
-    public void setSkillsetId(int skillsetId) {
-        this.skillsetId = skillsetId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

@@ -53,7 +53,6 @@ public class JobAdServiceImpl implements JobAdService {
         return jobAdRepository.getAdById(jobAd);
     }
 
-    //ToDo Add find successful and rejected matches for an ad
 
     @Override
     public Ad saveJobAd(Ad jobAd) {

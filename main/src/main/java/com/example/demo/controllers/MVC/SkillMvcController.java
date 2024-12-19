@@ -84,7 +84,7 @@ public class SkillMvcController {
             return "redirect:/skills";
         } catch (RuntimeException e) {
             model.addAttribute("error", "Error deleting skill: " + e.getMessage());
-            return "skillCommands/error-skill";
+            return "/skillCommands/error-skill";
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.demo.controllers.MVC;
 
+import com.example.demo.dTOs.JobApplicationDTO;
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.helpers.JobApplicationMapper;
 import com.example.demo.models.Ad;
 import com.example.demo.models.Application;
 import com.example.demo.models.Match;
@@ -21,11 +23,13 @@ public class ApplicationMvcController {
 
     private final ApplicationService applicationService;
     private final JobAdService jobAdService;
+    private final JobApplicationMapper jobApplicationMapper;
     private final MatchService matchService;
 
-    public ApplicationMvcController(ApplicationService applicationService, JobAdService jobAdService, MatchService matchService) {
+    public ApplicationMvcController(ApplicationService applicationService, JobAdService jobAdService, JobApplicationMapper jobApplicationMapper, MatchService matchService) {
         this.applicationService = applicationService;
         this.jobAdService = jobAdService;
+        this.jobApplicationMapper = jobApplicationMapper;
         this.matchService = matchService;
     }
 
@@ -57,8 +61,8 @@ public class ApplicationMvcController {
     }
 
     @PostMapping
-    public String createApplication(@ModelAttribute Application application) {
-        applicationService.saveApplication(application);
+    public String createApplication(@ModelAttribute JobApplicationDTO applicationDTO) {
+        applicationService.saveApplication(jobApplicationMapper.fromWebInput(applicationDTO));
         return "redirect:/applications"; // Redirect to the list of applications after creation
     }
 
@@ -91,10 +95,8 @@ public class ApplicationMvcController {
     @PostMapping("/{appId}/match/{adId}")
     public String matchJobAd(@PathVariable int appId, @PathVariable int adId, Model model) {
         try {
-            Ad jobAd = jobAdService.getJobAdById(adId);
-            Application application = applicationService.getApplicationById(appId);
 
-            Match match = matchService.createMatch(new Match(application, jobAd));
+            Match match = matchService.createMatchFromApplication(appId, adId);
             matchService.tryMatching(match);
 
             model.addAttribute("match", match);

@@ -36,7 +36,7 @@ public class Application {
     private City location;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private ApplicationStatus status = ApplicationStatus.ACTIVE;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -46,15 +46,11 @@ public class Application {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @ManyToMany
-    @JoinTable(
-            name = "job_application", // Join table name
-            joinColumns = @JoinColumn(name = "application_id"), // FK to Application
-            inverseJoinColumns = @JoinColumn(name = "skillset") // FK to Skill
+    @JoinTable(name = "applications_skills",
+            joinColumns = @JoinColumn(name = "application_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
     private Set<Skill> skills = new HashSet<>();
-
-    @OneToMany(mappedBy = "jobApplication", fetch = FetchType.EAGER)
-    private List<Match> matches = new ArrayList<>();
 
     public Application() {
     }
@@ -131,14 +127,6 @@ public class Application {
 
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
     }
 
     public City getLocation() {

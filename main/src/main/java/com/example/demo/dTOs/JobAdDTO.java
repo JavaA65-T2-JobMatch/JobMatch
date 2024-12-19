@@ -5,34 +5,29 @@ public class JobAdDTO {
     private String title;
     private double salaryMin;
     private double salaryMax;
+    private double salaryThreshold;
     private String description;
     private String requirements;
-    private String status;
-    private int companyId;
+    private int company;
     private int locationId;
     private String skills;
 
 
     public JobAdDTO() {}
 
-    public String getRequirements() {
-        return requirements;
-    }
 
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
 
-    public JobAdDTO(String title, double salaryMin, double salaryMax, String description,
-                    String requirements, String status, int companyId, int locationId, String skills
+
+    public JobAdDTO(String title, double salaryMin, double salaryMax, double salaryThreshold, String description,
+                    String requirements, int company, int locationId, String skills
                     ) {
         this.title = title;
         this.salaryMin = salaryMin;
         this.salaryMax = salaryMax;
+        this.salaryThreshold = salaryThreshold;
         this.description = description;
         this.requirements = requirements;
-        this.status = status;
-        this.companyId = companyId;
+        this.company = company;
         this.locationId = locationId;
         this.skills = skills;
 
@@ -73,20 +68,10 @@ public class JobAdDTO {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
-    }
+    public int getCompany() { return company; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+    public void setCompany(int company) {
+        this.company = company;
     }
 
     public int getLocationId() {
@@ -103,6 +88,20 @@ public class JobAdDTO {
 
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+    public double getSalaryThreshold() {
+        return salaryThreshold;
+    }
+
+    public void setSalaryThreshold(double salaryThreshold) {
+        this.salaryThreshold = salaryThreshold;
+    }
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
     }
 
   }

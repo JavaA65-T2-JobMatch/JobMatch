@@ -10,9 +10,6 @@ import com.example.demo.service.interfaces.CompanyService;
 import com.example.demo.service.interfaces.SkillService;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Component
 public class AdMapper {
         private final CompanyService companyService;
@@ -35,9 +32,10 @@ public class AdMapper {
         ad.setTitle(jobAdDTO.getTitle());
         ad.setSalaryMin(jobAdDTO.getSalaryMin());
         ad.setSalaryMax(jobAdDTO.getSalaryMax());
+        ad.setSalaryThreshold(jobAdDTO.getSalaryThreshold());
         ad.setDescription(jobAdDTO.getDescription());
-        ad.setStatus(JobAdStatus.valueOf(jobAdDTO.getStatus()));
-        ad.setCompany(companyService.getCompanyById(jobAdDTO.getCompanyId()));
+        ad.setStatus(JobAdStatus.ACTIVE);
+        ad.setCompany(companyService.getCompanyById(jobAdDTO.getCompany()));
         ad.setLocation(cityService.findCityById(jobAdDTO.getLocationId()));
         ad.setRequirements(jobAdDTO.getRequirements());
         assignSkills(jobAdDTO.getSkills(), ad);
