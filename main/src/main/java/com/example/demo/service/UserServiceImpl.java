@@ -1,31 +1,22 @@
 package com.example.demo.service;
 
-import com.example.demo.Security.JwtConfig;
 import com.example.demo.dTOs.UserLoginDTO;
 import com.example.demo.dTOs.UserRegistrationDTO;
 import com.example.demo.enums.UserRole;
 import com.example.demo.models.City;
 import com.example.demo.models.Company;
 import com.example.demo.models.Professional;
-import com.example.demo.repositories.interfaces.CityRepository;
-import com.example.demo.repositories.interfaces.CompanyRepository;
-import com.example.demo.repositories.interfaces.ProfessionalRepository;
-import com.example.demo.service.interfaces.UserService;
 import com.example.demo.models.UserEntity;
-import com.example.demo.repositories.interfaces.UserRepository;
-import io.jsonwebtoken.Jwts;
+import com.example.demo.repositories.interfaces.*;
+import com.example.demo.service.interfaces.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import java.util.Date;
+
 import java.util.Optional;
 
 @Service
@@ -37,18 +28,19 @@ public class UserServiceImpl implements UserService {
     private final CompanyRepository companyRepository;
     private final CityRepository cityRepository;
     PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final JwtConfig jwtConfig;
+
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthenticationManager authenticationManager, JwtConfig jwtConfig, ProfessionalRepository professionalRepository, CompanyRepository companyRepository, CityRepository cityRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           ProfessionalRepository professionalRepository, CompanyRepository companyRepository,
+                           CityRepository cityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
-        this.authenticationManager = authenticationManager;
-        this.jwtConfig = jwtConfig;
         this.professionalRepository = professionalRepository;
         this.companyRepository = companyRepository;
         this.cityRepository = cityRepository;
+
     }
 
 
@@ -138,7 +130,7 @@ public class UserServiceImpl implements UserService {
             if (registrationDTO.getCityId() != null){
                 Optional<City> city = cityRepository.findById(registrationDTO.getCityId());
                 if (city.isPresent()) {
-                    company.setCityId(city.get().getCityId());
+                    company.setCity(city.get());
                 }else {
                     throw new IllegalArgumentException("City not found");
                 }
@@ -165,29 +157,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(UserLoginDTO loginDTO) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginDTO.getUsername(),
-                            loginDTO.getPassword()
-                    )
-            );
-            return "User authenticated successfully";
-        } catch (AuthenticationException e) {
-            throw new IllegalArgumentException("Invalid username or password");
+        UserEntity user = userRepository.findByUsername(loginDTO.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Invalid password");
         }
+
+        return "Login successful";
+    }
+    @Override
+    public boolean checkPassword(UserLoginDTO loginDTO) {
+        UserEntity user = findUserByUsername(loginDTO.getUsername());
+        return passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
     }
 
     @Override
-    public String generateToken(String username){
-        long expirationTime = 3600000;
-
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(jwtConfig.getSecretKey())
-                .compact();
+    public UserRole findRoleByUsername(String username) {
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return user.getRole();
     }
 
 }

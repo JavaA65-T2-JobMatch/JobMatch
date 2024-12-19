@@ -26,8 +26,9 @@ public class Company{
     @Column(name = "logo")
     private String logo;
 
-    @Column(name = "city", nullable = false)
-    private int cityId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "city")
+    private City city;
 
     public String getCompanyName() {
         return companyName;
@@ -61,12 +62,12 @@ public class Company{
         this.logo = logo;
     }
 
-    public int getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityId(int city_id) {
-        this.cityId = city_id;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public int getCompanyId() {

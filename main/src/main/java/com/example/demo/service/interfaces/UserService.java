@@ -2,6 +2,7 @@ package com.example.demo.service.interfaces;
 
 import com.example.demo.dTOs.UserLoginDTO;
 import com.example.demo.dTOs.UserRegistrationDTO;
+import com.example.demo.enums.UserRole;
 import com.example.demo.models.UserEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -20,6 +21,7 @@ public interface UserService {
 
     String login(UserLoginDTO loginDTO);
 
+    boolean checkPassword(UserLoginDTO loginDTO);
 
-    String generateToken(String username);
+    UserRole findRoleByUsername(String username);
 }

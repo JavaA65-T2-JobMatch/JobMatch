@@ -1,15 +1,19 @@
 package com.example.demo.service;
 
+import com.example.demo.models.City;
 import com.example.demo.models.Company;
 import com.example.demo.models.UserEntity;
 import com.example.demo.repositories.interfaces.CompanyRepository;
+import com.example.demo.service.interfaces.CityService;
 import com.example.demo.service.interfaces.CompanyService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -17,10 +21,12 @@ import java.util.List;
 public class CompanyServiceImpl  implements CompanyService {
 
     private final CompanyRepository companyRepository;
+    private final CityService cityService;
 
     @Autowired
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, CityService cityService) {
         this.companyRepository = companyRepository;
+        this.cityService = cityService;
     }
 
     @Override
@@ -29,17 +35,20 @@ public class CompanyServiceImpl  implements CompanyService {
     }
 
     @Override
-    public Company updateCompany(int companyId, Company updatedCompany, UserEntity authenticationUser) {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new EntityNotFoundException("Company not found"));
+    public Company updateCompany(String username, Company updatedCompany) {
+        Company company = companyRepository.findByUserUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Company not found for user: " + username));
 
-        if (company.getUser() != authenticationUser.getUserId()) {
-            throw new SecurityException("You are not authorized to update this company");
+        City city = cityService.getCityByCityId(updatedCompany.getCity().getCityId());
+        if (updatedCompany.getCity() == null || updatedCompany.getCity().getCityId() != city.getCityId()) {
+            throw new IllegalArgumentException("City ID is required for updated a company");
         }
+        updatedCompany.setCity(city);
+
         company.setCompanyName(updatedCompany.getCompanyName());
         company.setDescription(updatedCompany.getDescription());
         company.setContactInfo(updatedCompany.getContactInfo());
-        company.setCityId(updatedCompany.getCityId());
+        company.setCity(city);
         company.setLogo(updatedCompany.getLogo());
 
         return companyRepository.save(company);
@@ -66,4 +75,20 @@ public class CompanyServiceImpl  implements CompanyService {
     public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
+
+    @Override
+    public Company getCompanyByUsername(String username) {
+        return companyRepository.findByCompanyName(username);
+    }
+
+    @Override
+    public Company findByUserId(int userId) {
+        return companyRepository.findCompanyByUser(userId);
+    }
+
+    @Override
+    public Optional<Company> findCompanyByUsername(String username){
+        return companyRepository.findByCompanyByUsername(username);
+    }
+
 }

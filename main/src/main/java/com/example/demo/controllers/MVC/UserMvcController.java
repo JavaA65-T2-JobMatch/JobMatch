@@ -27,6 +27,6 @@ public class UserMvcController {
 
     @GetMapping("/logout")
     public String logout(){
-        return "redirect:/users/login";
+        return "redirect:/";
     }
 }

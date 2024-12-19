@@ -14,10 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-
 
 @RestController
 @RequestMapping("/users")
@@ -27,7 +25,6 @@ public class UserRestController {
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
 
-
     @Autowired
     public UserRestController(UserService userService, UserMapper userMapper, AuthenticationManager authenticationManager) {
         this.userService = userService;
@@ -36,16 +33,35 @@ public class UserRestController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegistrationDTO registrationDTO){
+    public ResponseEntity<String> register(@RequestBody UserRegistrationDTO registrationDTO) {
         try {
             userService.register(registrationDTO);
             return ResponseEntity.ok("User registered successfully");
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginDTO loginDTO) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginDTO.getUsername(),
+                            loginDTO.getPassword()
+                    )
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            return ResponseEntity.ok("Login successful");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+    }
+
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO) {
         UserEntity userEntity = userMapper.toEntity(userDTO);
         userService.createUser(userEntity);
         return ResponseEntity.ok("User created successfully");
@@ -54,43 +70,41 @@ public class UserRestController {
     @PutMapping("/change-username")
     public ResponseEntity<String> updateUser(
             @Valid @RequestBody UserDTO userDTO,
-            @AuthenticationPrincipal UserEntity authenticatedUser){
+            @AuthenticationPrincipal UserEntity authenticatedUser) {
 
-        if (authenticatedUser == null){
+        if (authenticatedUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
         }
 
         try {
-            userService.updateUser(authenticatedUser.getUserId(),authenticatedUser,userDTO.getUsername());
+            userService.updateUser(authenticatedUser.getUserId(), authenticatedUser, userDTO.getUsername());
             return ResponseEntity.ok("User updated successfully");
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error updating user");
         }
-
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable int userId,
-                                             @AuthenticationPrincipal UserEntity authenticatedUser){
-        if (authenticatedUser.getUserId() != userId){
+                                             @AuthenticationPrincipal UserEntity authenticatedUser) {
+        if (authenticatedUser.getUserId() != userId) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         try {
-            userService.deleteUser(userId,authenticatedUser.getUserId());
+            userService.deleteUser(userId, authenticatedUser.getUserId());
             return ResponseEntity.noContent().build();
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-
     }
 
     @PutMapping("/change-password")
     public ResponseEntity<String> changePassword(
             @AuthenticationPrincipal UserEntity authenticatedUser,
-            @RequestBody ChangePasswordDTO passwordDTO){
+            @RequestBody ChangePasswordDTO passwordDTO) {
 
-        if (authenticatedUser == null){
+        if (authenticatedUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("User not authenticated");
         }
@@ -98,29 +112,11 @@ public class UserRestController {
         try {
             String username = authenticatedUser.getUsername();
 
-            userService.changePassword(username,passwordDTO.getOldPassword(),passwordDTO.getNewPassword());
+            userService.changePassword(username, passwordDTO.getOldPassword(), passwordDTO.getNewPassword());
 
             return ResponseEntity.ok("Password changed successfully");
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO){
-
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginDTO.getUsername(),
-                            loginDTO.getPassword()
-                    )
-            );
-            String token = userService.generateToken(loginDTO.getUsername());
-
-
-            return ResponseEntity.ok(new TokenResponseDTO(token));
-        }catch (AuthenticationException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }
 }
