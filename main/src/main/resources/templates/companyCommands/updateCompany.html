@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Company Profile</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>Edit Company Profile</h1>
+</header>
+
+<div class="container">
+    <form method="post" th:action="@{/company/update}">
+        <!-- Hidden field to emulate PUT -->
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" id="companyId" name="companyId" th:value="${company.companyId}" />
+
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" th:value="${company.companyName}" required />
+        <br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required th:text="${company.description}"></textarea>
+        <br>
+
+        <label for="contactInfo">Contact Info:</label>
+        <input type="text" id="contactInfo" name="contactInfo" th:value="${company.contactInfo}" required />
+        <br>
+
+        <label for="logo">Logo URL:</label>
+        <input type="text" id="logo" name="logo" th:value="${company.logo}" />
+        <br>
+
+        <label for="cityId">City:</label>
+        <select id="cityId" name="cityId" required>
+            <option value="">Select a city</option>
+            <th:block th:each="city : ${cities}">
+                <option th:value="${city.cityId}" th:text="${city.cityName}"
+                        th:selected="${city.cityId == company.city?.cityId}">
+                </option>
+            </th:block>
+        </select>
+        <br>
+
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2024 JobMatch. All rights reserved.</p>
+</footer>
+</body>
+</html>
